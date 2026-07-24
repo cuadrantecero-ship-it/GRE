@@ -1,0 +1,95 @@
+﻿@model GestionRadio.Application.DTOs.ClienteCreateDto
+
+@{
+    ViewData["Title"] = "Nuevo Cliente";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="row">
+
+        <div class="col-md-10 offset-md-1">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h3 class="mb-0">
+                        Nuevo Cliente
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-action="Create" method="post">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="row">
+
+                            
+                            <div class="col-md-12 mb-3">
+                                <label asp-for="RazonSocial" class="form-label"></label>
+                                <input asp-for="RazonSocial" class="form-control" />
+                                <span asp-validation-for="RazonSocial" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="NombreComercial" class="form-label"></label>
+                                <input asp-for="NombreComercial" class="form-control" />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Contacto" class="form-label"></label>
+                                <input asp-for="Contacto" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Telefono" class="form-label"></label>
+                                <input asp-for="Telefono" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="WhatsApp" class="form-label"></label>
+                                <input asp-for="WhatsApp" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label asp-for="Email" class="form-label"></label>
+                                <input asp-for="Email" class="form-control" />
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label asp-for="RFC" class="form-label"></label>
+                                <input asp-for="RFC" class="form-control" />
+                            </div>
+
+                        </div>
+
+                        <hr />
+
+                        <button type="submit" class="btn btn-success">
+                            Guardar Cliente
+                        </button>
+
+                        <a asp-action="Index" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

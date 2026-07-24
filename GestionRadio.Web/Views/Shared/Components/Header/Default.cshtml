@@ -1,0 +1,27 @@
+﻿@model GestionRadio.Web.Models.ViewModels.Shared.HeaderViewModel
+
+<div class="gr-header">
+
+    <div>
+        <strong>@Model.Sistema</strong>
+    </div>
+
+    <div>
+        @Model.Emisora
+    </div>
+
+    <div>
+        SQL:
+        @(Model.SqlConectado ? "🟢" : "🔴")
+    </div>
+
+    <div>
+        Dinesat:
+        @(Model.DinesatConectado ? "🟢" : "🔴")
+    </div>
+
+    <div>
+        @Model.Usuario
+    </div>
+
+</div>

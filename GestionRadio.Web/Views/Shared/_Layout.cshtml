@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - GESTIÓN RADIO ERP</title>
+
+    <!-- ImportMap (.NET 9) -->
+    <script type="importmap"></script>
+
+    <!-- Estilos del sistema -->
+    <partial name="_Styles" />
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    @await Component.InvokeAsync("Header")
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="gr-container">
+
+        <!-- MENÚ LATERAL -->
+        <partial name="_Sidebar" />
+
+        <!-- CONTENIDO -->
+        <main class="gr-content">
+
+            @RenderBody()
+
+        </main>
+
+    </div>
+
+    <!-- FOOTER -->
+    <partial name="_Footer" />
+
+    <!-- JAVASCRIPT -->
+    <partial name="_Scripts" />
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

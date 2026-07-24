@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Versiones";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0">
+                VERSIONES
+            </h2>
+
+            <small class="text-secondary">
+                Administración de versiones comerciales
+            </small>
+        </div>
+
+        <button class="btn btn-primary">
+            + Nueva Versión
+        </button>
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-dark text-white">
+
+            Versiones registradas
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-hover table-striped align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Código</th>
+
+                        <th>Título</th>
+
+                        <th>Duración</th>
+
+                        <th>Estado</th>
+
+                        <th width="180">Acciones</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>SPO00001</td>
+
+                        <td>Coca Cola 20 segundos</td>
+
+                        <td>20</td>
+
+                        <td>
+
+                            <span class="badge bg-success">
+                                Activo
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-sm btn-warning">
+                                Editar
+                            </button>
+
+                            <button class="btn btn-sm btn-danger">
+                                Desactivar
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

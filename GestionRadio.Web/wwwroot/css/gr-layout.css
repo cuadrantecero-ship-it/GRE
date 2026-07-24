@@ -1,0 +1,121 @@
+﻿/* ==========================================================
+   GESTIÓN RADIO ERP
+   LAYOUT v1.0
+   ========================================================== */
+
+/* ---------- BODY ---------- */
+
+body {
+    background: var(--gr-bg);
+    color: var(--gr-text);
+}
+
+/* ---------- CONTENEDOR PRINCIPAL ---------- */
+
+.gr-container {
+    display: flex;
+    min-height: calc(100vh - var(--gr-header-height));
+    margin-top: var(--gr-header-height);
+}
+
+/* ---------- SIDEBAR ---------- */
+
+.gr-sidebar {
+    width: var(--gr-sidebar-width);
+    background: var(--gr-bg-secondary);
+    border-right: 1px solid var(--gr-border);
+    position: fixed;
+    left: 0;
+    top: var(--gr-header-height);
+    bottom: var(--gr-footer-height);
+    overflow-y: auto;
+    transition: .25s;
+    z-index: 1000;
+}
+
+/* ---------- CONTENIDO ---------- */
+
+.gr-content {
+    flex: 1;
+    margin-left: var(--gr-sidebar-width);
+    padding: 30px;
+    min-height: calc(100vh - var(--gr-header-height) - var(--gr-footer-height));
+}
+
+/* ---------- HEADER ---------- */
+
+.gr-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--gr-header-height);
+    background: var(--gr-bg-secondary);
+    border-bottom: 1px solid var(--gr-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 1100;
+}
+
+/* ---------- FOOTER ---------- */
+
+.gr-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--gr-footer-height);
+    background: var(--gr-bg-secondary);
+    border-top: 1px solid var(--gr-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: .85rem;
+    color: var(--gr-text-muted);
+}
+
+/* ---------- TARJETAS ---------- */
+
+.gr-card {
+    background: var(--gr-bg-secondary);
+    border: 1px solid var(--gr-border);
+    border-radius: var(--gr-radius-md);
+    box-shadow: var(--gr-shadow-sm);
+    padding: 20px;
+}
+
+/* ---------- TITULOS ---------- */
+
+.gr-page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:992px) {
+
+    .gr-sidebar {
+        transform: translateX(-100%);
+    }
+
+        .gr-sidebar.open {
+            transform: translateX(0);
+        }
+
+    .gr-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+}
+
+@media(max-width:768px) {
+
+    .gr-content {
+        padding: 15px;
+    }
+}

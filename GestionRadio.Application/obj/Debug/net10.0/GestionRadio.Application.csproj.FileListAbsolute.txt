@@ -1,0 +1,15 @@
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\bin\Debug\net10.0\GestionRadio.Application.deps.json
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\bin\Debug\net10.0\GestionRadio.Application.dll
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\bin\Debug\net10.0\GestionRadio.Application.pdb
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\bin\Debug\net10.0\GestionRadio.Domain.dll
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\bin\Debug\net10.0\GestionRadio.Domain.pdb
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\GestionRadio.Application.csproj.AssemblyReference.cache
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\GestionRadio.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\GestionRadio.Application.AssemblyInfoInputs.cache
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\GestionRadio.Application.AssemblyInfo.cs
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\GestionRadio.Application.csproj.CoreCompileInputs.cache
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\GestionR.B8EF2EE4.Up2Date
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\GestionRadio.Application.dll
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\refint\GestionRadio.Application.dll
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\GestionRadio.Application.pdb
+D:\GESTION_RADIO\src\GESTION_RADIO\GestionRadio.Application\obj\Debug\net10.0\ref\GestionRadio.Application.dll

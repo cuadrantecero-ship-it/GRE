@@ -1,0 +1,172 @@
+﻿/* ==========================================================
+   GESTIÓN RADIO ERP
+   THEME v1.0
+   ========================================================== */
+
+:root {
+    /* ===========================
+       COLORES PRINCIPALES
+       =========================== */
+
+    --gr-bg: #0B1120;
+    --gr-bg-secondary: #111827;
+    --gr-surface: #1F2937;
+    --gr-border: #2D3748;
+    /* ===========================
+       COLOR CORPORATIVO
+       =========================== */
+
+    --gr-primary: #7C3AED;
+    --gr-primary-hover: #8B5CF6;
+    --gr-primary-dark: #5B21B6;
+    /* ===========================
+       ESTADOS
+       =========================== */
+
+    --gr-success: #22C55E;
+    --gr-warning: #F59E0B;
+    --gr-danger: #EF4444;
+    --gr-info: #3B82F6;
+    /* ===========================
+       TEXTO
+       =========================== */
+
+    --gr-text: #F8FAFC;
+    --gr-text-secondary: #CBD5E1;
+    --gr-text-muted: #94A3B8;
+    /* ===========================
+       SOMBRAS
+       =========================== */
+
+    --gr-shadow-sm: 0 2px 4px rgba(0,0,0,.20);
+    --gr-shadow-md: 0 8px 20px rgba(0,0,0,.25);
+    --gr-shadow-lg: 0 20px 40px rgba(0,0,0,.35);
+    /* ===========================
+       BORDES
+       =========================== */
+
+    --gr-radius-sm: 8px;
+    --gr-radius-md: 12px;
+    --gr-radius-lg: 18px;
+    /* ===========================
+       SIDEBAR
+       =========================== */
+
+    --gr-sidebar-width: 270px;
+    /* ===========================
+       HEADER
+       =========================== */
+
+    --gr-header-height: 72px;
+    /* ===========================
+       FOOTER
+       =========================== */
+
+    --gr-footer-height: 40px;
+}
+
+/* ==========================================================
+   RESET
+   ========================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Inter',sans-serif;
+    background: var(--gr-bg);
+    color: var(--gr-text);
+    overflow-x: hidden;
+}
+
+/* ==========================================================
+   TIPOGRAFÍA
+   ========================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--gr-text);
+    font-weight: 600;
+}
+
+p {
+    color: var(--gr-text-secondary);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: inherit;
+    }
+
+/* ==========================================================
+   SCROLLBAR
+   ========================================================== */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111827;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 20px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #4B5563;
+    }
+
+/* ==========================================================
+   SELECCIÓN
+   ========================================================== */
+
+::selection {
+    background: var(--gr-primary);
+    color: white;
+}
+
+/* ==========================================================
+   UTILIDADES
+   ========================================================== */
+
+.gr-hidden {
+    display: none !important;
+}
+
+.gr-text-center {
+    text-align: center;
+}
+
+.gr-fw-bold {
+    font-weight: 700;
+}
+
+.gr-success {
+    color: var(--gr-success);
+}
+
+.gr-danger {
+    color: var(--gr-danger);
+}
+
+.gr-warning {
+    color: var(--gr-warning);
+}
+
+.gr-info {
+    color: var(--gr-info);
+}
