@@ -1,8 +1,20 @@
 ﻿"use strict";
 
-// GESTIÓN RADIO ERP
-// Reloj (implementación en el siguiente paso)
+function actualizarReloj() {
 
-document.addEventListener("DOMContentLoaded", () => {
+    const reloj = document.getElementById("grClock");
 
-});
+    if (!reloj)
+        return;
+
+    const ahora = new Date();
+
+    reloj.innerHTML =
+        ahora.toLocaleTimeString("es-MX", {
+            hour12: false
+        });
+}
+
+setInterval(actualizarReloj, 1000);
+
+actualizarReloj();

@@ -1,27 +1,57 @@
 ﻿@model GestionRadio.Web.Models.ViewModels.Shared.HeaderViewModel
 
-<div class="gr-header">
+<header class="gr-header">
 
-    <div>
-        <strong>@Model.Sistema</strong>
+    <div class="gr-header-left">
+
+        <div class="gr-logo">
+
+            <i class="bi bi-broadcast-pin"></i>
+
+            <div>
+
+                <div class="gr-system-name">
+                    @Model.Sistema
+                </div>
+
+                <div class="gr-station">
+                    @Model.Emisora
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    <div>
-        @Model.Emisora
+    <div class="gr-header-right">
+
+        <div class="gr-status">
+
+            <span class="badge bg-success">
+                SQL
+            </span>
+
+            <span class="badge bg-success">
+                DINESAT
+            </span>
+
+        </div>
+
+        <div class="gr-user">
+
+            <i class="bi bi-person-circle"></i>
+
+            @Model.Usuario
+
+        </div>
+
+        <div class="gr-clock">
+
+            <span id="grClock"></span>
+
+        </div>
+
     </div>
 
-    <div>
-        SQL:
-        @(Model.SqlConectado ? "🟢" : "🔴")
-    </div>
-
-    <div>
-        Dinesat:
-        @(Model.DinesatConectado ? "🟢" : "🔴")
-    </div>
-
-    <div>
-        @Model.Usuario
-    </div>
-
-</div>
+</header>

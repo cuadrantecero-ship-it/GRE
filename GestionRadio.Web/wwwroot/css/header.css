@@ -1,22 +1,69 @@
-﻿.gr-header {
+﻿/*=====================================================
+  GESTIÓN RADIO ERP
+  HEADER
+======================================================*/
+
+.gr-header {
     height: 70px;
-    background: #111827;
-    color: white;
+    background: #1b1d2d;
+    border-bottom: 1px solid #2d3152;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 25px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    padding: 0 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1100;
+}
+
+.gr-header-left {
+    display: flex;
+    align-items: center;
 }
 
 .gr-logo {
-    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+    .gr-logo i {
+        font-size: 34px;
+        color: #7b61ff;
+    }
+
+.gr-system-name {
+    color: #ffffff;
+    font-size: 20px;
     font-weight: 700;
+    letter-spacing: .5px;
+}
+
+.gr-station {
+    color: #9ca3af;
+    font-size: 13px;
 }
 
 .gr-header-right {
     display: flex;
     align-items: center;
     gap: 25px;
-    font-size: 15px;
+}
+
+.gr-status {
+    display: flex;
+    gap: 10px;
+}
+
+.gr-user {
+    color: white;
+    font-weight: 500;
+}
+
+.gr-clock {
+    color: #7b61ff;
+    font-size: 18px;
+    font-weight: 600;
 }

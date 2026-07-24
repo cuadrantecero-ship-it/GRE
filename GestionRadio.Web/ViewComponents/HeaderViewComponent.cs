@@ -1,5 +1,5 @@
-﻿using GestionRadio.Web.Models.ViewModels.Shared;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using GestionRadio.Web.Models.ViewModels.Shared;
 
 namespace GestionRadio.Web.ViewComponents;
 
@@ -9,10 +9,10 @@ public class HeaderViewComponent : ViewComponent
     {
         var model = new HeaderViewModel
         {
-            Sistema = "GESTIÓN RADIO ERP",
-            Emisora = "XHEPX FM 90.1",
-            Usuario = "Administrador",
-            Version = "v1.0.0",
+            Sistema = "GESTIÓN RADIO",
+            Emisora = "XHEPX FM",
+            Usuario = "ADMIN",
+            Fecha = DateTime.Now,
             SqlConectado = true,
             DinesatConectado = true
         };
