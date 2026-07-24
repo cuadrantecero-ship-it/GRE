@@ -1,0 +1,199 @@
+﻿@model GestionRadio.Web.Models.ViewModels.Versiones.VersionesViewModel
+
+<div class="modal fade"
+     id="modalNuevaVersion"
+     tabindex="-1"
+     aria-labelledby="modalNuevaVersionLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+
+                <h5 class="modal-title" id="modalNuevaVersionLabel">
+                    <i class="bi bi-music-note-list"></i>
+                    Nueva Versión
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-12 mb-3">
+
+                        <label class="form-label">
+                            Campaña
+                        </label>
+
+                        <select asp-for="IdCampania"
+                                class="form-select">
+
+                            <option value="">
+                                -- Seleccione una campaña --
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="row">
+
+                    <div class="col-md-9">
+
+                        <label class="form-label">
+                            Material Dinesat
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Buscar material..." />
+
+                    </div>
+
+                    <div class="col-md-3 d-grid">
+
+                        <label class="form-label">&nbsp;</label>
+
+                        <button class="btn btn-outline-primary"
+                                type="button">
+
+                            Buscar
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="row mt-3">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Código
+                        </label>
+
+                        <input asp-for="CodigoMaterial"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                    <div class="col-md-8">
+
+                        <label class="form-label">
+                            Título
+                        </label>
+
+                        <input asp-for="TituloMaterial"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Duración (seg)
+                        </label>
+
+                        <input asp-for="DuracionSegundos"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Orden Rotación
+                        </label>
+
+                        <input asp-for="OrdenRotacion"
+                               class="form-control"
+                               min="1" />
+
+                    </div>
+
+                </div>
+
+                <div class="row mt-4">
+
+                    <div class="col-md-6">
+
+                        <div class="form-check">
+
+                            <input asp-for="Preferente"
+                                   class="form-check-input" />
+
+                            <label class="form-check-label">
+                                Preferente
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-check">
+
+                            <input asp-for="Activo"
+                                   class="form-check-input" />
+
+                            <label class="form-check-label">
+                                Activo
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                    Cancelar
+
+                </button>
+
+                <button class="btn btn-success"
+                        id="btnGuardarVersion">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Guardar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

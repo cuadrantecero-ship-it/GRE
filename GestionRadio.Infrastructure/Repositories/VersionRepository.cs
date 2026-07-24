@@ -61,7 +61,7 @@ public sealed class VersionRepository : BaseRepository, IVersionRepository
             {
                 IdVersion = id,
                 FechaModificacion = DateTime.UtcNow,
-                UsuarioModificacion = 1
+                UsuarioModificacion = "ADMIN"
             });
     }
 }
