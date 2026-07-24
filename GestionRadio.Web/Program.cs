@@ -22,6 +22,7 @@ builder.Services.AddSingleton<SqlConnectionFactory>();
 // =========================
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ICampaniaRepository, CampaniaRepository>();
+builder.Services.AddScoped<IVersionRepository, VersionRepository>();
 builder.Services.AddScoped<MaterialRepository>();
 
 // =========================
@@ -29,6 +30,7 @@ builder.Services.AddScoped<MaterialRepository>();
 // =========================
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<ICampaniaService, CampaniaService>();
+builder.Services.AddScoped<IVersionService, VersionService>();
 
 var app = builder.Build();
 

@@ -1,92 +1,115 @@
-﻿@{
+﻿@model List<GestionRadio.Web.Models.ViewModels.Versiones.VersionesViewModel>
+
+@{
     ViewData["Title"] = "Versiones";
 }
 
-<div class="container-fluid mt-4">
+<div class="container-fluid">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
+
         <div>
-            <h2 class="fw-bold mb-0">
-                VERSIONES
+            <h2 class="gr-page-title">
+                Versiones
             </h2>
 
             <small class="text-secondary">
-                Administración de versiones comerciales
+                Administración de versiones asociadas a campañas
             </small>
         </div>
 
-        <button class="btn btn-primary">
-            + Nueva Versión
-        </button>
+        <div>
+            <button class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i>
+                Nueva versión
+            </button>
+
+            <button class="btn btn-success ms-2">
+                <i class="bi bi-download"></i>
+                Importar Dinesat
+            </button>
+        </div>
+
     </div>
 
-    <div class="card shadow-sm">
+    <div class="gr-card">
 
-        <div class="card-header bg-dark text-white">
+        <table class="table table-hover align-middle">
 
-            Versiones registradas
+            <thead>
 
-        </div>
+                <tr>
+                    <th>Código</th>
+                    <th>Título</th>
+                    <th>Duración</th>
+                    <th>Rotación</th>
+                    <th>Preferente</th>
+                    <th>Estado</th>
+                </tr>
 
-        <div class="card-body">
+            </thead>
 
-            <table class="table table-hover table-striped align-middle">
+            <tbody>
 
-                <thead>
-
+                @if (!Model.Any())
+                {
                     <tr>
 
-                        <th>Código</th>
+                        <td colspan="6" class="text-center text-secondary">
 
-                        <th>Título</th>
+                            No existen versiones registradas.
 
-                        <th>Duración</th>
-
-                        <th>Estado</th>
-
-                        <th width="180">Acciones</th>
+                        </td>
 
                     </tr>
+                }
 
-                </thead>
-
-                <tbody>
-
+                @foreach (var item in Model)
+                {
                     <tr>
 
-                        <td>SPO00001</td>
+                        <td>@item.CodigoMaterial</td>
 
-                        <td>Coca Cola 20 segundos</td>
+                        <td>@item.TituloMaterial</td>
 
-                        <td>20</td>
+                        <td>@item.DuracionSegundos s</td>
+
+                        <td>@item.OrdenRotacion</td>
 
                         <td>
 
-                            <span class="badge bg-success">
-                                Activo
-                            </span>
+                            @if (item.Preferente)
+                            {
+                                <span class="badge bg-warning text-dark">
+                                    ★ Preferente
+                                </span>
+                            }
 
                         </td>
 
                         <td>
 
-                            <button class="btn btn-sm btn-warning">
-                                Editar
-                            </button>
-
-                            <button class="btn btn-sm btn-danger">
-                                Desactivar
-                            </button>
+                            @if (item.Activo)
+                            {
+                                <span class="badge bg-success">
+                                    Activa
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">
+                                    Inactiva
+                                </span>
+                            }
 
                         </td>
 
                     </tr>
+                }
 
-                </tbody>
+            </tbody>
 
-            </table>
-
-        </div>
+        </table>
 
     </div>
 

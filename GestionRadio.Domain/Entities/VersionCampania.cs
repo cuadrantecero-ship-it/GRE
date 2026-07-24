@@ -2,29 +2,29 @@
 
 public class VersionCampania
 {
-    public long ID_VERSION { get; set; }
+    public long IdVersion { get; set; }
 
-    public long ID_CAMPANIA { get; set; }
+    public long IdCampania { get; set; }
 
-    public long MATERIAL_ID_DINESAT { get; set; }
+    public long MaterialIdDinesat { get; set; }
 
-    public string CODIGO_MATERIAL { get; set; } = string.Empty;
+    public string CodigoMaterial { get; set; } = string.Empty;
 
-    public string TITULO_MATERIAL { get; set; } = string.Empty;
+    public string TituloMaterial { get; set; } = string.Empty;
 
-    public int DURACION_SEGUNDOS { get; set; }
+    public int DuracionSegundos { get; set; }
 
-    public byte ORDEN_ROTACION { get; set; } = 1;
+    public byte OrdenRotacion { get; set; } = 1;
 
-    public bool PREFERENTE { get; set; }
+    public bool Preferente { get; set; }
 
-    public bool ACTIVO { get; set; } = true;
+    public bool Activo { get; set; } = true;
 
-    public DateTime FECHA_ALTA { get; set; }
+    public DateTime FechaAlta { get; set; }
 
-    public string USUARIO_ALTA { get; set; } = string.Empty;
+    public string UsuarioAlta { get; set; } = string.Empty;
 
-    public DateTime? FECHA_MODIFICACION { get; set; }
+    public DateTime? FechaModificacion { get; set; }
 
-    public string? USUARIO_MODIFICACION { get; set; }
+    public string? UsuarioModificacion { get; set; }
 }

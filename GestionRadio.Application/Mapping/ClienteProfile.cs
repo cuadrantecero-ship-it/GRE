@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using GestionRadio.Application.DTOs;
+using GestionRadio.Application.DTOs.Versiones;
 using GestionRadio.Domain.Entities;
+
 
 namespace GestionRadio.Application.Mapping;
 
@@ -32,5 +34,18 @@ public sealed class ClienteProfile : Profile
         CreateMap<CampaniaUpdateDto, Campania>();
 
         CreateMap<Campania, CampaniaUpdateDto>();
+
+        // ==========================
+        // VERSIONES
+        // ==========================
+
+        CreateMap<VersionCampania, VersionDto>();
+
+        CreateMap<VersionCreateDto, VersionCampania>();
+
+        CreateMap<VersionUpdateDto, VersionCampania>();
+
+        CreateMap<VersionCampania, VersionUpdateDto>();
     }
+
 }
