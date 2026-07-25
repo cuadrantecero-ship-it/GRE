@@ -6,7 +6,7 @@ public class VersionDto
 
     public long IdCampania { get; set; }
 
-    public int MaterialId { get; set; }
+    public long MaterialIdDinesat { get; set; }
 
     public string CodigoMaterial { get; set; } = string.Empty;
 

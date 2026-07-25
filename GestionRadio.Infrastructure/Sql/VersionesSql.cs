@@ -6,7 +6,7 @@ public static class VersionesSql
 SELECT
     ID_VERSION              AS IdVersion,
     ID_CAMPANIA             AS IdCampania,
-    MATERIAL_ID_DINESAT     AS MaterialId,
+    MATERIAL_ID_DINESAT     AS MaterialIdDinesat,
     CODIGO_MATERIAL         AS CodigoMaterial,
     TITULO_MATERIAL         AS TituloMaterial,
     DURACION_SEGUNDOS       AS DuracionSegundos,
@@ -24,7 +24,7 @@ ORDER BY ORDEN_ROTACION;
 SELECT
     ID_VERSION              AS IdVersion,
     ID_CAMPANIA             AS IdCampania,
-    MATERIAL_ID_DINESAT     AS MaterialId,
+    MATERIAL_ID_DINESAT     AS MaterialIdDinesat,
     CODIGO_MATERIAL         AS CodigoMaterial,
     TITULO_MATERIAL         AS TituloMaterial,
     DURACION_SEGUNDOS       AS DuracionSegundos,
@@ -56,7 +56,7 @@ INSERT INTO GR_VERSION
 VALUES
 (
     @IdCampania,
-    @MaterialId,
+    @MaterialIdDinesat,
     @CodigoMaterial,
     @TituloMaterial,
     @DuracionSegundos,

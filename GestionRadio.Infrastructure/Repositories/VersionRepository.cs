@@ -35,6 +35,21 @@ public sealed class VersionRepository : BaseRepository, IVersionRepository
 
     public async Task<long> InsertarAsync(VersionCampania version)
     {
+        Console.WriteLine("======================================");
+        Console.WriteLine("INSERTANDO VERSION");
+        Console.WriteLine("======================================");
+        Console.WriteLine($"IdCampania        : {version.IdCampania}");
+        Console.WriteLine($"MaterialIdDinesat : {version.MaterialIdDinesat}");
+        Console.WriteLine($"CodigoMaterial    : {version.CodigoMaterial}");
+        Console.WriteLine($"TituloMaterial    : {version.TituloMaterial}");
+        Console.WriteLine($"DuracionSegundos  : {version.DuracionSegundos}");
+        Console.WriteLine($"OrdenRotacion     : {version.OrdenRotacion}");
+        Console.WriteLine($"Preferente        : {version.Preferente}");
+        Console.WriteLine($"Activo            : {version.Activo}");
+        Console.WriteLine($"FechaAlta         : {version.FechaAlta}");
+        Console.WriteLine($"UsuarioAlta       : {version.UsuarioAlta}");
+        Console.WriteLine("======================================");
+
         using var db = CreateConnection();
 
         return await db.ExecuteScalarAsync<long>(

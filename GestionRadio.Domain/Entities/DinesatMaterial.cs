@@ -10,7 +10,7 @@ public sealed class DinesatMaterial
     /// <summary>
     /// Identificador interno del material en Dinesat.
     /// </summary>
-    public long MaterialId { get; set; }
+    public long MaterialIdDinesat { get; set; }
 
     /// <summary>
     /// Código del material (Ejemplo: SPO00004).
@@ -23,8 +23,7 @@ public sealed class DinesatMaterial
     public string Titulo { get; set; } = string.Empty;
 
     /// <summary>
-    /// Duración del material en milisegundos,
-    /// tal como la almacena Dinesat.
+    /// Duración del material en milisegundos tal como la almacena Dinesat.
     /// </summary>
     public int Duracion { get; set; }
 
@@ -35,7 +34,7 @@ public sealed class DinesatMaterial
     public int MaterialStateId { get; set; }
 
     /// <summary>
-    /// Indica si el material está disponible.
+    /// Indica si el material está activo en Dinesat.
     /// </summary>
     public bool Activo => MaterialStateId == 1;
 }

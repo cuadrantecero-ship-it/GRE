@@ -20,7 +20,7 @@ public class VersionesViewModel
     // Material Dinesat
     //=========================
 
-    public long MaterialId { get; set; }
+    public long MaterialIdDinesat { get; set; }
 
     public string CodigoMaterial { get; set; } = string.Empty;
 

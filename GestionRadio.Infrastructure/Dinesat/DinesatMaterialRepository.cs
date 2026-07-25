@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Dapper;
+using Microsoft.Data.SqlClient;
 using GestionRadio.Domain.Entities;
 using GestionRadio.Domain.Interfaces;
 using GestionRadio.Infrastructure.Persistence;
@@ -23,7 +24,7 @@ public sealed class DinesatMaterialRepository : IDinesatMaterialRepository
     {
         const string sql = @"
 SELECT
-    MATERIALID      AS MaterialId,
+    MATERIALID      AS MaterialIdDinesat,
     CODE            AS Codigo,
     TITLE           AS Titulo,
     LENGTH          AS Duracion,
@@ -31,14 +32,37 @@ SELECT
 FROM MATERIAL
 WHERE CODE = @Codigo;";
 
-        using IDbConnection cn = _connectionFactory.CreateDinesatConnection();
+        using var cn = (SqlConnection)_connectionFactory.CreateDinesatConnection();
 
-        return await cn.QueryFirstOrDefaultAsync<DinesatMaterial>(
+        await cn.OpenAsync();
+
+        Console.WriteLine("==========================================");
+        Console.WriteLine("PRUEBA CONEXIÓN DINESAT");
+        Console.WriteLine("Servidor : " + cn.DataSource);
+        Console.WriteLine("Base     : " + cn.Database);
+        Console.WriteLine("Código   : " + codigo.Trim().ToUpperInvariant());
+        Console.WriteLine("==========================================");
+
+        var material = await cn.QueryFirstOrDefaultAsync<DinesatMaterial>(
             sql,
             new
             {
                 Codigo = codigo.Trim().ToUpperInvariant()
             });
+
+        if (material == null)
+        {
+            Console.WriteLine("RESULTADO : MATERIAL NO ENCONTRADO");
+        }
+        else
+        {
+            Console.WriteLine("RESULTADO : MATERIAL ENCONTRADO");
+            Console.WriteLine("ID        : " + material.MaterialIdDinesat);
+            Console.WriteLine("TÍTULO    : " + material.Titulo);
+            Console.WriteLine("CÓDIGO    : " + material.Codigo);
+        }
+
+        return material;
     }
 
     //=========================================================
@@ -49,7 +73,7 @@ WHERE CODE = @Codigo;";
     {
         const string sql = @"
 SELECT
-    MATERIALID      AS MaterialId,
+    MATERIALID      AS MaterialIdDinesat,
     CODE            AS Codigo,
     TITLE           AS Titulo,
     LENGTH          AS Duracion,
@@ -58,7 +82,9 @@ FROM MATERIAL
 WHERE MATERIALSTATEID = 1
 ORDER BY CODE;";
 
-        using IDbConnection cn = _connectionFactory.CreateDinesatConnection();
+        using var cn = (SqlConnection)_connectionFactory.CreateDinesatConnection();
+
+        await cn.OpenAsync();
 
         var materiales = await cn.QueryAsync<DinesatMaterial>(sql);
 

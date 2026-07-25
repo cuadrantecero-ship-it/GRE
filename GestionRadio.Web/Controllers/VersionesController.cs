@@ -31,31 +31,23 @@ public class VersionesController : Controller
         var datos = await _versionService.ObtenerTodosAsync();
 
         var modelo = datos.Select(v => new VersionesViewModel
-        {
-            //=========================
-            // Identificadores
-            //=========================
+{
+    IdVersion = v.IdVersion,
+    IdCampania = v.IdCampania,
 
-            IdVersion = v.IdVersion,
-            IdCampania = v.IdCampania,
+            // IMPORTANTE:
+            // VersionesViewModel todavía usa MaterialId.
+            MaterialIdDinesat = v.MaterialIdDinesat,
 
-            //=========================
-            // Material Dinesat
-            //=========================
-
-            MaterialId = v.MaterialId,
             CodigoMaterial = v.CodigoMaterial,
-            TituloMaterial = v.TituloMaterial,
-            DuracionSegundos = v.DuracionSegundos,
+    TituloMaterial = v.TituloMaterial,
+    DuracionSegundos = v.DuracionSegundos,
 
-            //=========================
-            // Configuración
-            //=========================
+    OrdenRotacion = v.OrdenRotacion,
+    Preferente = v.Preferente,
+    Activo = v.Activo
 
-            OrdenRotacion = v.OrdenRotacion,
-            Preferente = v.Preferente,
-            Activo = v.Activo
-        }).ToList();
+}).ToList();
 
         return View(modelo);
     }
@@ -78,6 +70,7 @@ public class VersionesController : Controller
             {
                 IdCampania = c.IdCampania,
                 Nombre = c.Nombre
+
             }).ToList()
         };
 
@@ -85,7 +78,7 @@ public class VersionesController : Controller
     }
 
     //========================================================
-    // BUSCAR MATERIAL DINESAT
+    // BUSCAR MATERIAL
     //========================================================
 
     [HttpGet]
@@ -117,11 +110,12 @@ public class VersionesController : Controller
             {
                 ok = true,
 
-                materialId = material.MaterialId,
+                materialId = material.MaterialIdDinesat,
+
                 codigoMaterial = material.Codigo,
+
                 tituloMaterial = material.Titulo,
 
-                // LENGTH viene en milisegundos
                 duracionSegundos = material.Duracion / 1000
             });
         }
