@@ -3,6 +3,7 @@
     <File Path="001_001_GR_Catalogos.sql" />
     <File Path="003_001_GR_VERSION.sql" />
   </Folder>
+  <Project Path="GestionRadio.Agent/GestionRadio.Agent.csproj" Id="4c5f2ef9-ac56-4ad6-846e-1113560f33e3" />
   <Project Path="GestionRadio.Application/GestionRadio.Application.csproj" Id="8fbc3472-e6ce-48aa-a8ed-a4bea8e4604a" />
   <Project Path="GestionRadio.Database/GestionRadio.Database.csproj" Id="d9f16fcd-ba77-448a-ac30-187dac7c3c95" />
   <Project Path="GestionRadio.Domain/GestionRadio.Domain.csproj" Id="75e27165-57a7-402f-8e87-8d1d5e1d2265" />
