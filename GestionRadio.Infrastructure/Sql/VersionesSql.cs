@@ -21,7 +21,20 @@ ORDER BY ORDEN_ROTACION;
 ";
 
     public const string ObtenerPorId = @"
-SELECT *
+SELECT
+    ID_VERSION              AS IdVersion,
+    ID_CAMPANIA             AS IdCampania,
+    MATERIAL_ID_DINESAT     AS MaterialId,
+    CODIGO_MATERIAL         AS CodigoMaterial,
+    TITULO_MATERIAL         AS TituloMaterial,
+    DURACION_SEGUNDOS       AS DuracionSegundos,
+    ORDEN_ROTACION          AS OrdenRotacion,
+    PREFERENTE              AS Preferente,
+    ACTIVO                  AS Activo,
+    FECHA_ALTA              AS FechaAlta,
+    USUARIO_ALTA            AS UsuarioAlta,
+    FECHA_MODIFICACION      AS FechaModificacion,
+    USUARIO_MODIFICACION    AS UsuarioModificacion
 FROM GR_VERSION
 WHERE ID_VERSION = @IdVersion;
 ";
@@ -62,6 +75,7 @@ UPDATE GR_VERSION
 SET
     ORDEN_ROTACION = @OrdenRotacion,
     PREFERENTE = @Preferente,
+    ACTIVO = @Activo,
     FECHA_MODIFICACION = @FechaModificacion,
     USUARIO_MODIFICACION = @UsuarioModificacion
 WHERE ID_VERSION = @IdVersion;

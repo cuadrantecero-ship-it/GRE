@@ -4,7 +4,7 @@ public class VersionCreateDto
 {
     public long IdCampania { get; set; }
 
-    public int MaterialId { get; set; }
+    public long MaterialId { get; set; }
 
     public string CodigoMaterial { get; set; } = string.Empty;
 

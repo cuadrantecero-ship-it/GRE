@@ -130,31 +130,5 @@
 
 @section Scripts
 {
-    <script>
-
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const boton = document.getElementById("btnNuevaVersion");
-
-            boton.addEventListener("click", function () {
-
-                fetch("/Versiones/Nueva")
-                    .then(response => response.text())
-                    .then(html => {
-
-                        document.getElementById("contenedorModalVersion").innerHTML = html;
-
-                        const modal = new bootstrap.Modal(
-                            document.getElementById("modalNuevaVersion")
-                        );
-
-                        modal.show();
-
-                    });
-
-            });
-
-        });
-
-    </script>
+    <script src="~/js/versiones/versiones.js" asp-append-version="true"></script>
 }

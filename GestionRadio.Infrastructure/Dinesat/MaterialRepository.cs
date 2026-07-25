@@ -27,8 +27,34 @@ ORDER BY CODE;";
 
         using var cn = _connectionFactory.CreateConnection("DinesatRadio9");
 
-        var resultado = await cn.QueryAsync<MaterialDinesat>(sql);
+        return await cn.QueryAsync<MaterialDinesat>(sql);
+    }
 
-        return resultado;
+    //==================================================
+    // BUSCAR MATERIAL POR CÓDIGO
+    //==================================================
+
+    public async Task<MaterialDinesat?> ObtenerPorCodigoAsync(string codigo)
+    {
+        const string sql = @"
+SELECT TOP (1)
+    MATERIALID      AS MaterialId,
+    CODE            AS Codigo,
+    TITLE           AS Titulo,
+    LENGTH          AS Duracion,
+    MATERIALSTATEID
+FROM MATERIAL
+WHERE
+    CODE = @Codigo
+    AND MATERIALSTATEID = 1;";
+
+        using var cn = _connectionFactory.CreateConnection("DinesatRadio9");
+
+        return await cn.QueryFirstOrDefaultAsync<MaterialDinesat>(
+            sql,
+            new
+            {
+                Codigo = codigo.Trim().ToUpper()
+            });
     }
 }

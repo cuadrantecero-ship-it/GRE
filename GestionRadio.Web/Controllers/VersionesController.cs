@@ -1,4 +1,5 @@
-﻿using GestionRadio.Application.Interfaces;
+﻿using GestionRadio.Application.DTOs.Versiones;
+using GestionRadio.Application.Interfaces;
 using GestionRadio.Web.Models.ViewModels.Versiones;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,31 +7,51 @@ namespace GestionRadio.Web.Controllers;
 
 public class VersionesController : Controller
 {
-    private readonly IVersionService _service;
+    private readonly IVersionService _versionService;
+    private readonly ICampaniaService _campaniaService;
+    private readonly IDinesatMaterialService _materialService;
 
-    public VersionesController(IVersionService service)
+    public VersionesController(
+        IVersionService versionService,
+        ICampaniaService campaniaService,
+        IDinesatMaterialService materialService)
     {
-        _service = service;
+        _versionService = versionService;
+        _campaniaService = campaniaService;
+        _materialService = materialService;
     }
+
+    //========================================================
+    // LISTADO
+    //========================================================
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var datos = await _service.ObtenerTodosAsync();
+        var datos = await _versionService.ObtenerTodosAsync();
 
         var modelo = datos.Select(v => new VersionesViewModel
         {
+            //=========================
             // Identificadores
-            IdVersion = (int)v.IdVersion,
-            IdCampania = (int)v.IdCampania,
+            //=========================
 
+            IdVersion = v.IdVersion,
+            IdCampania = v.IdCampania,
+
+            //=========================
             // Material Dinesat
+            //=========================
+
             MaterialId = v.MaterialId,
             CodigoMaterial = v.CodigoMaterial,
             TituloMaterial = v.TituloMaterial,
             DuracionSegundos = v.DuracionSegundos,
 
+            //=========================
             // Configuración
+            //=========================
+
             OrdenRotacion = v.OrdenRotacion,
             Preferente = v.Preferente,
             Activo = v.Activo
@@ -39,15 +60,114 @@ public class VersionesController : Controller
         return View(modelo);
     }
 
+    //========================================================
+    // NUEVA VERSION
+    //========================================================
+
     [HttpGet]
-    public IActionResult Nueva()
+    public async Task<IActionResult> Nueva()
     {
+        var campanias = await _campaniaService.ObtenerTodosAsync();
+
         var model = new VersionesViewModel
         {
             Activo = true,
-            OrdenRotacion = 1
+            OrdenRotacion = 1,
+
+            Campanias = campanias.Select(c => new CampaniaItemViewModel
+            {
+                IdCampania = c.IdCampania,
+                Nombre = c.Nombre
+            }).ToList()
         };
 
         return PartialView("_NuevaVersionModal", model);
+    }
+
+    //========================================================
+    // BUSCAR MATERIAL DINESAT
+    //========================================================
+
+    [HttpGet]
+    public async Task<IActionResult> BuscarMaterial(string codigo)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(codigo))
+            {
+                return Json(new
+                {
+                    ok = false,
+                    mensaje = "Debe indicar un código."
+                });
+            }
+
+            var material = await _materialService.ObtenerPorCodigoAsync(codigo);
+
+            if (material == null)
+            {
+                return Json(new
+                {
+                    ok = false,
+                    mensaje = "No existe el material en Dinesat."
+                });
+            }
+
+            return Json(new
+            {
+                ok = true,
+
+                materialId = material.MaterialId,
+                codigoMaterial = material.Codigo,
+                tituloMaterial = material.Titulo,
+
+                // LENGTH viene en milisegundos
+                duracionSegundos = material.Duracion / 1000
+            });
+        }
+        catch (Exception ex)
+        {
+            return Json(new
+            {
+                ok = false,
+                mensaje = ex.Message
+            });
+        }
+    }
+
+    //========================================================
+    // GUARDAR
+    //========================================================
+
+    [HttpPost]
+    public async Task<IActionResult> Guardar([FromBody] VersionCreateDto dto)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    ok = false,
+                    mensaje = "La información recibida no es válida."
+                });
+            }
+
+            await _versionService.CrearAsync(dto);
+
+            return Json(new
+            {
+                ok = true,
+                mensaje = "La versión fue registrada correctamente."
+            });
+        }
+        catch (Exception ex)
+        {
+            return Json(new
+            {
+                ok = false,
+                mensaje = ex.Message
+            });
+        }
     }
 }

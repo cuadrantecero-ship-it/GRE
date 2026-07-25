@@ -26,28 +26,53 @@
 
             <div class="modal-body">
 
+                <!-- ========================= -->
+                <!-- Campaña -->
+                <!-- ========================= -->
+
                 <div class="row">
 
                     <div class="col-md-12 mb-3">
 
-                        <label class="form-label">
+                        <label asp-for="IdCampania"
+                               class="form-label">
                             Campaña
                         </label>
 
                         <select asp-for="IdCampania"
+                                id="IdCampania"
                                 class="form-select">
 
                             <option value="">
                                 -- Seleccione una campaña --
                             </option>
 
+                            @foreach (var campania in Model.Campanias)
+                            {
+                                <option value="@campania.IdCampania">
+                                    @campania.Nombre
+                                </option>
+                            }
+
                         </select>
+
+                        <span asp-validation-for="IdCampania"
+                              class="text-danger">
+                        </span>
 
                     </div>
 
                 </div>
 
                 <hr />
+
+                <!-- ========================= -->
+                <!-- Material Dinesat -->
+                <!-- ========================= -->
+
+                <input asp-for="MaterialId"
+                       id="MaterialId"
+                       type="hidden" />
 
                 <div class="row">
 
@@ -58,8 +83,9 @@
                         </label>
 
                         <input type="text"
+                               id="txtBuscarMaterial"
                                class="form-control"
-                               placeholder="Buscar material..." />
+                               placeholder="Ejemplo: SPO00004" />
 
                     </div>
 
@@ -67,9 +93,11 @@
 
                         <label class="form-label">&nbsp;</label>
 
-                        <button class="btn btn-outline-primary"
-                                type="button">
+                        <button type="button"
+                                id="btnBuscarMaterial"
+                                class="btn btn-outline-primary">
 
+                            <i class="bi bi-search"></i>
                             Buscar
 
                         </button>
@@ -80,15 +108,20 @@
 
                 <hr />
 
-                <div class="row mt-3">
+                <!-- ========================= -->
+                <!-- Información del Material -->
+                <!-- ========================= -->
+
+                <div class="row">
 
                     <div class="col-md-4">
 
-                        <label class="form-label">
-                            Código
+                        <label asp-for="CodigoMaterial"
+                               class="form-label">
                         </label>
 
                         <input asp-for="CodigoMaterial"
+                               id="CodigoMaterial"
                                class="form-control"
                                readonly />
 
@@ -96,11 +129,12 @@
 
                     <div class="col-md-8">
 
-                        <label class="form-label">
-                            Título
+                        <label asp-for="TituloMaterial"
+                               class="form-label">
                         </label>
 
                         <input asp-for="TituloMaterial"
+                               id="TituloMaterial"
                                class="form-control"
                                readonly />
 
@@ -112,11 +146,12 @@
 
                     <div class="col-md-4">
 
-                        <label class="form-label">
-                            Duración (seg)
+                        <label asp-for="DuracionSegundos"
+                               class="form-label">
                         </label>
 
                         <input asp-for="DuracionSegundos"
+                               id="DuracionSegundos"
                                class="form-control"
                                readonly />
 
@@ -124,11 +159,12 @@
 
                     <div class="col-md-4">
 
-                        <label class="form-label">
-                            Orden Rotación
+                        <label asp-for="OrdenRotacion"
+                               class="form-label">
                         </label>
 
                         <input asp-for="OrdenRotacion"
+                               id="OrdenRotacion"
                                class="form-control"
                                min="1" />
 
@@ -143,10 +179,11 @@
                         <div class="form-check">
 
                             <input asp-for="Preferente"
+                                   id="Preferente"
                                    class="form-check-input" />
 
-                            <label class="form-check-label">
-                                Preferente
+                            <label asp-for="Preferente"
+                                   class="form-check-label">
                             </label>
 
                         </div>
@@ -158,10 +195,11 @@
                         <div class="form-check">
 
                             <input asp-for="Activo"
+                                   id="Activo"
                                    class="form-check-input" />
 
-                            <label class="form-check-label">
-                                Activo
+                            <label asp-for="Activo"
+                                   class="form-check-label">
                             </label>
 
                         </div>
@@ -174,15 +212,17 @@
 
             <div class="modal-footer">
 
-                <button class="btn btn-secondary"
+                <button type="button"
+                        class="btn btn-secondary"
                         data-bs-dismiss="modal">
 
                     Cancelar
 
                 </button>
 
-                <button class="btn btn-success"
-                        id="btnGuardarVersion">
+                <button type="button"
+                        id="btnGuardarVersion"
+                        class="btn btn-success">
 
                     <i class="bi bi-check-circle"></i>
 
@@ -197,3 +237,215 @@
     </div>
 
 </div>
+
+<script>
+
+    (function () {
+
+    const btnBuscar = document.getElementById("btnBuscarMaterial");
+    const txtBuscar = document.getElementById("txtBuscarMaterial");
+    const btnGuardar = document.getElementById("btnGuardarVersion");
+
+    if (btnBuscar) {
+    btnBuscar.addEventListener("click", buscarMaterial);
+    }
+
+    if (txtBuscar) {
+    txtBuscar.addEventListener("keydown", function (e) {
+
+    if (e.key === "Enter") {
+    e.preventDefault();
+    buscarMaterial();
+    }
+
+    });
+    }
+
+    if (btnGuardar) {
+    btnGuardar.addEventListener("click", guardarVersion);
+    }
+
+    async function buscarMaterial() {
+
+    const codigo = txtBuscar.value.trim();
+
+    if (codigo === "") {
+
+    alert("Capture un código Dinesat.");
+    txtBuscar.focus();
+    return;
+
+    }
+
+    limpiarMaterial();
+
+    try {
+
+    const response = await fetch(
+    "/Versiones/BuscarMaterial?codigo=" +
+    encodeURIComponent(codigo)
+    );
+
+    const resultado = await response.json();
+
+    console.log("Respuesta:", resultado);
+
+    if (!response.ok || resultado.ok === false) {
+
+    alert(resultado.mensaje ?? "Material no encontrado.");
+
+    txtBuscar.focus();
+
+    return;
+
+    }
+
+    const txtMaterialId = document.getElementById("MaterialId");
+    const txtCodigo = document.getElementById("CodigoMaterial");
+    const txtTitulo = document.getElementById("TituloMaterial");
+    const txtDuracion = document.getElementById("DuracionSegundos");
+
+    console.log(txtMaterialId);
+    console.log(txtCodigo);
+    console.log(txtTitulo);
+    console.log(txtDuracion);
+
+    if (!txtMaterialId ||
+    !txtCodigo ||
+    !txtTitulo ||
+    !txtDuracion) {
+
+    alert("No se encontraron los controles del formulario.");
+
+    return;
+
+    }
+
+    txtMaterialId.value = resultado.materialId;
+    txtCodigo.value = resultado.codigoMaterial;
+    txtTitulo.value = resultado.tituloMaterial;
+    txtDuracion.value = resultado.duracionSegundos;
+
+    }
+    catch (error) {
+
+    console.error(error);
+
+    alert("Error consultando Dinesat.");
+
+    }
+
+    }
+
+        async function guardarVersion() {
+
+            const dto = {
+
+                idCampania:
+                    parseInt(document.getElementById("IdCampania").value),
+
+                materialId:
+                    parseInt(document.getElementById("MaterialId").value),
+
+                codigoMaterial:
+                    document.getElementById("CodigoMaterial").value,
+
+                tituloMaterial:
+                    document.getElementById("TituloMaterial").value,
+
+                duracionSegundos:
+                    parseInt(document.getElementById("DuracionSegundos").value),
+
+                ordenRotacion:
+                    parseInt(document.getElementById("OrdenRotacion").value),
+
+                preferente:
+                    document.getElementById("Preferente").checked,
+
+                activo:
+                    document.getElementById("Activo").checked
+
+            };
+
+            if (isNaN(dto.idCampania)) {
+
+                alert("Seleccione una campaña.");
+
+                return;
+
+            }
+
+            if (isNaN(dto.materialId)) {
+
+                alert("Debe buscar y seleccionar un material de Dinesat.");
+
+                txtBuscar.focus();
+
+                return;
+
+            }
+
+            if (isNaN(dto.ordenRotacion)) {
+
+                dto.ordenRotacion = 1;
+
+            }
+
+            try {
+
+                const response = await fetch("/Versiones/Guardar", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(dto)
+
+                });
+
+                const resultado = await response.json();
+
+                if (resultado.ok) {
+
+                    alert(resultado.mensaje);
+
+                    const modal = bootstrap.Modal.getInstance(
+                        document.getElementById("modalNuevaVersion"));
+
+                    if (modal) {
+                        modal.hide();
+                    }
+
+                    location.reload();
+
+                }
+                else {
+
+                    alert(resultado.mensaje);
+
+                }
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                alert("No fue posible guardar la versión.");
+
+            }
+
+        }
+
+        function limpiarMaterial() {
+
+            document.getElementById("MaterialId").value = "";
+            document.getElementById("CodigoMaterial").value = "";
+            document.getElementById("TituloMaterial").value = "";
+            document.getElementById("DuracionSegundos").value = "";
+
+        }
+
+    })();
+</script>

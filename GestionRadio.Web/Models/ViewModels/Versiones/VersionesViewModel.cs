@@ -6,9 +6,9 @@ public class VersionesViewModel
     // Identificadores
     //=========================
 
-    public int IdVersion { get; set; }
+    public long IdVersion { get; set; }
 
-    public int IdCampania { get; set; }
+    public long IdCampania { get; set; }
 
     //=========================
     // Información Campaña
@@ -56,7 +56,7 @@ public class VersionesViewModel
 
 public class CampaniaItemViewModel
 {
-    public int IdCampania { get; set; }
+    public long IdCampania { get; set; }
 
     public string Nombre { get; set; } = string.Empty;
 }
