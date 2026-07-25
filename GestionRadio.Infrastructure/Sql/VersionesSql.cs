@@ -39,6 +39,29 @@ FROM GR_VERSION
 WHERE ID_VERSION = @IdVersion;
 ";
 
+    public const string ObtenerPorCampania = @"
+SELECT
+    ID_VERSION              AS IdVersion,
+    ID_CAMPANIA             AS IdCampania,
+    MATERIAL_ID_DINESAT     AS MaterialIdDinesat,
+    CODIGO_MATERIAL         AS CodigoMaterial,
+    TITULO_MATERIAL         AS TituloMaterial,
+    DURACION_SEGUNDOS       AS DuracionSegundos,
+    ORDEN_ROTACION          AS OrdenRotacion,
+    PREFERENTE              AS Preferente,
+    ACTIVO                  AS Activo,
+    FECHA_ALTA              AS FechaAlta,
+    USUARIO_ALTA            AS UsuarioAlta,
+    FECHA_MODIFICACION      AS FechaModificacion,
+    USUARIO_MODIFICACION    AS UsuarioModificacion
+FROM GR_VERSION
+WHERE ID_CAMPANIA = @IdCampania
+  AND ACTIVO = 1
+ORDER BY
+    PREFERENTE DESC,
+    ORDEN_ROTACION ASC;
+";
+
     public const string Insertar = @"
 INSERT INTO GR_VERSION
 (

@@ -1,0 +1,172 @@
+﻿@model IEnumerable<GestionRadio.Application.DTOs.Programacion.ProgramacionDto>
+
+@{
+    ViewData["Title"] = "Programación";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-0">
+                <i class="bi bi-calendar-week"></i>
+                Programación
+            </h2>
+
+            <small class="text-muted">
+                Administración de la programación de materiales.
+            </small>
+        </div>
+
+        <div>
+            <a asp-action="Create"
+               class="btn btn-success">
+
+                <i class="bi bi-plus-circle"></i>
+                Nueva Programación
+
+            </a>
+        </div>
+
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+
+            @TempData["Success"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
+
+        </div>
+    }
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <strong>Listado</strong>
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-striped table-hover align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Fecha</th>
+
+                        <th>Hora</th>
+
+                        <th>Orden</th>
+
+                        <th>Transmitido</th>
+
+                        <th>Activo</th>
+
+                        <th width="180"></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @if (Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+
+                                    @item.FechaProgramacion.ToString("dd/MM/yyyy")
+
+                                </td>
+
+                                <td>
+
+                                    @item.HoraProgramada
+
+                                </td>
+
+                                <td>
+
+                                    @item.Orden
+
+                                </td>
+
+                                <td>
+
+                                    @(item.Transmitido ? "Sí" : "No")
+
+                                </td>
+
+                                <td>
+
+                                    @(item.Activo ? "Activo" : "Inactivo")
+
+                                </td>
+
+                                <td>
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.IdProgramacion"
+                                       class="btn btn-primary btn-sm">
+
+                                        Editar
+
+                                    </a>
+
+                                    <form asp-action="Delete"
+                                          asp-route-id="@item.IdProgramacion"
+                                          method="post"
+                                          class="d-inline">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <button type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('¿Desea eliminar este registro?');">
+
+                                            Eliminar
+
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+
+                            <td colspan="6"
+                                class="text-center text-muted">
+
+                                No existen registros.
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

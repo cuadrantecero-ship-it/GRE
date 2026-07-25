@@ -13,6 +13,18 @@ public sealed class VersionRepository : BaseRepository, IVersionRepository
     {
     }
 
+
+    public async Task<IEnumerable<VersionCampania>> ObtenerPorCampaniaAsync(long campaniaId)
+    {
+        using var db = CreateConnection();
+
+        return await db.QueryAsync<VersionCampania>(
+            VersionesSql.ObtenerPorCampania,
+            new
+            {
+                IdCampania = campaniaId
+            });
+    }
     public async Task<IEnumerable<VersionCampania>> ObtenerTodosAsync()
     {
         using var db = CreateConnection();

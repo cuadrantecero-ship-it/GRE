@@ -1,0 +1,158 @@
+﻿@model GestionRadio.Application.DTOs.Programacion.ProgramacionCreateDto
+
+@{
+    ViewData["Title"] = "Nueva Programación";
+}
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-lg-10 mx-auto">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h4 class="mb-0">
+                        <i class="bi bi-calendar-plus"></i>
+                        Nueva Programación
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-action="Create" method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="text-danger mb-3">
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4 mb-3">
+
+                                <label asp-for="FechaProgramacion"
+                                       class="form-label fw-bold">
+                                </label>
+
+                                <input asp-for="FechaProgramacion"
+                                       class="form-control"
+                                       type="date" />
+
+                                <span asp-validation-for="FechaProgramacion"
+                                      class="text-danger">
+                                </span>
+
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+
+                                <label asp-for="HoraProgramada"
+                                       class="form-label fw-bold">
+                                </label>
+
+                                <input asp-for="HoraProgramada"
+                                       class="form-control"
+                                       type="time" />
+
+                                <span asp-validation-for="HoraProgramada"
+                                      class="text-danger">
+                                </span>
+
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+
+                                <label asp-for="Orden"
+                                       class="form-label fw-bold">
+                                </label>
+
+                                <input asp-for="Orden"
+                                       class="form-control" />
+
+                                <span asp-validation-for="Orden"
+                                      class="text-danger">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <div class="form-check mt-4">
+
+                                    <input asp-for="Transmitido"
+                                           class="form-check-input" />
+
+                                    <label asp-for="Transmitido"
+                                           class="form-check-label">
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <div class="form-check mt-4">
+
+                                    <input asp-for="Activo"
+                                           class="form-check-input" />
+
+                                    <label asp-for="Activo"
+                                           class="form-check-label">
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a asp-action="Index"
+                               class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-left"></i>
+
+                                Regresar
+
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-success">
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Guardar
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

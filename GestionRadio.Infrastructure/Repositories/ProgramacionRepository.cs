@@ -6,7 +6,7 @@ using GestionRadio.Infrastructure.Sql;
 
 namespace GestionRadio.Infrastructure.Repositories;
 
-public class ProgramacionRepository : BaseRepository, IProgramacionRepository
+public sealed class ProgramacionRepository : BaseRepository, IProgramacionRepository
 {
     public ProgramacionRepository(SqlConnectionFactory connectionFactory)
         : base(connectionFactory)
@@ -23,6 +23,9 @@ public class ProgramacionRepository : BaseRepository, IProgramacionRepository
 
     public async Task<Programacion?> ObtenerPorIdAsync(long id)
     {
+        if (id <= 0)
+            throw new ArgumentOutOfRangeException(nameof(id));
+
         using var connection = CreateConnection();
 
         return await connection.QueryFirstOrDefaultAsync<Programacion>(
@@ -32,6 +35,8 @@ public class ProgramacionRepository : BaseRepository, IProgramacionRepository
 
     public async Task<long> InsertarAsync(Programacion programacion)
     {
+        ArgumentNullException.ThrowIfNull(programacion);
+
         using var connection = CreateConnection();
 
         return await connection.ExecuteScalarAsync<long>(
@@ -41,6 +46,8 @@ public class ProgramacionRepository : BaseRepository, IProgramacionRepository
 
     public async Task ActualizarAsync(Programacion programacion)
     {
+        ArgumentNullException.ThrowIfNull(programacion);
+
         using var connection = CreateConnection();
 
         await connection.ExecuteAsync(
@@ -50,6 +57,9 @@ public class ProgramacionRepository : BaseRepository, IProgramacionRepository
 
     public async Task EliminarLogicoAsync(long id)
     {
+        if (id <= 0)
+            throw new ArgumentOutOfRangeException(nameof(id));
+
         using var connection = CreateConnection();
 
         await connection.ExecuteAsync(

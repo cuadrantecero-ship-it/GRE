@@ -8,6 +8,8 @@ public interface IVersionRepository
 
     Task<VersionCampania?> ObtenerPorIdAsync(long id);
 
+    Task<IEnumerable<VersionCampania>> ObtenerPorCampaniaAsync(long campaniaId);
+
     Task<long> InsertarAsync(VersionCampania version);
 
     Task ActualizarAsync(VersionCampania version);

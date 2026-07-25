@@ -11,4 +11,8 @@ public class MaterialDinesat
     public int Duracion { get; set; }
 
     public bool Activo { get; set; }
+
+    public string Categoria { get; set; } = string.Empty;
+
+    public string? TrafficCode { get; set; }
 }

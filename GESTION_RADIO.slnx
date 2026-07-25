@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Scripts/">
     <File Path="001_001_GR_Catalogos.sql" />
+    <File Path="001_006_GR_PROGRAMACION.sql" />
     <File Path="003_001_GR_VERSION.sql" />
   </Folder>
   <Project Path="GestionRadio.Agent/GestionRadio.Agent.csproj" Id="4c5f2ef9-ac56-4ad6-846e-1113560f33e3" />
