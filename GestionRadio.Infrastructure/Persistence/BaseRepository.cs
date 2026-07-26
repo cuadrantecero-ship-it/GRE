@@ -1,10 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Data;
 
-namespace GestionRadio.Infrastructure.Persistence
+namespace GestionRadio.Infrastructure.Persistence;
+
+public abstract class BaseRepository
 {
-    internal class BaseRepository
+    private readonly SqlConnectionFactory _connectionFactory;
+
+    protected BaseRepository(SqlConnectionFactory connectionFactory)
     {
+        _connectionFactory = connectionFactory;
+    }
+
+    protected IDbConnection CreateConnection()
+    {
+        return _connectionFactory.CreateGestionRadioConnection();
+    }
+
+    protected IDbConnection CreateDinesatConnection()
+    {
+        return _connectionFactory.CreateDinesatConnection();
     }
 }

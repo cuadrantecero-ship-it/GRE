@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GestionRadio.Infrastructure.Dinesat.Repositories
+namespace GestionRadio.Infrastructure.Repositories
 {
     internal class DinesatMaterialRepository
     {

@@ -1,0 +1,121 @@
+﻿@model IEnumerable<GestionRadio.Application.DTOs.ParrillaDto>
+
+@{
+    ViewData["Title"] = "Parrillas";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>Parrillas de Programación</h2>
+            <small class="text-muted">
+                Configuración base de la programación de cada emisora
+            </small>
+        </div>
+
+        <a asp-action="Create"
+           class="btn btn-primary">
+
+            Nueva Parrilla
+
+        </a>
+
+    </div>
+
+    <table class="table table-hover table-bordered align-middle">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Nombre</th>
+
+                <th>Emisora</th>
+
+                <th>Inicio</th>
+
+                <th>Fin</th>
+
+                <th>Estado</th>
+
+                <th width="220">Acciones</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+
+                <tr>
+
+                    <td>@item.ParrillaId</td>
+
+                    <td>@item.Nombre</td>
+
+                    <td>@item.EmisoraId</td>
+
+                    <td>@item.FechaInicio</td>
+
+                    <td>@item.FechaFin</td>
+
+                    <td>
+
+                        @if (item.Activa)
+                        {
+                            <span class="badge bg-success">
+                                Activa
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Inactiva
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@item.ParrillaId"
+                           class="btn btn-warning btn-sm">
+
+                            Editar
+
+                        </a>
+
+                        <form asp-action="Delete"
+                              asp-route-id="@item.ParrillaId"
+                              method="post"
+                              class="d-inline">
+
+                            @Html.AntiForgeryToken()
+
+                            <button class="btn btn-danger btn-sm"
+                                    onclick="return confirm('¿Eliminar la parrilla?')">
+
+                                Eliminar
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

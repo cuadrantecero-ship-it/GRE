@@ -9,41 +9,73 @@ GO
 
 CREATE TABLE dbo.GR_PROGRAMACION
 (
-    ID_PROGRAMACION       BIGINT IDENTITY(1,1) NOT NULL,
+    ID_PROGRAMACION            BIGINT IDENTITY(1,1) NOT NULL,
 
-    ID_CAMPANIA           BIGINT NOT NULL,
-    ID_VERSION            BIGINT NOT NULL,
-    ID_EMISORA            BIGINT NOT NULL,
+    ID_CAMPANIA                BIGINT NOT NULL,
+    ID_VERSION                 BIGINT NOT NULL,
+    ID_EMISORA                 BIGINT NOT NULL,
 
-    FECHA_PROGRAMACION    DATE NOT NULL,
-    HORA_PROGRAMADA       TIME(0) NOT NULL,
+    FECHA_PROGRAMACION         DATE NOT NULL,
+    HORA_PROGRAMADA            TIME(0) NOT NULL,
 
-    MATERIAL_ID_DINESAT   BIGINT NOT NULL,
-    CODIGO_MATERIAL       NVARCHAR(30) NOT NULL,
-    TITULO_MATERIAL       NVARCHAR(250) NOT NULL,
-    DURACION_SEGUNDOS     INT NOT NULL,
+    ------------------------------------------------------------------------
+    -- REFERENCIAS A DINESAT
+    ------------------------------------------------------------------------
 
-    ORDEN                 INT NOT NULL,
+    PROGRAMMING_ID_DINESAT     BIGINT NULL,
+    PROGRAMBLOCK_ID_DINESAT    BIGINT NULL,
+    PROGRAMEVENT_ID_DINESAT    BIGINT NULL,
 
-    TRANSMITIDO           BIT NOT NULL
+    ------------------------------------------------------------------------
+    -- MATERIAL
+    ------------------------------------------------------------------------
+
+    MATERIAL_ID_DINESAT        BIGINT NOT NULL,
+    CODIGO_MATERIAL            NVARCHAR(30) NOT NULL,
+    TITULO_MATERIAL            NVARCHAR(250) NOT NULL,
+    DURACION_SEGUNDOS          INT NOT NULL,
+
+    ------------------------------------------------------------------------
+    -- ORDEN
+    ------------------------------------------------------------------------
+
+    ORDEN                      INT NOT NULL,
+
+    ------------------------------------------------------------------------
+    -- ESTADO
+    ------------------------------------------------------------------------
+
+    TRANSMITIDO                BIT NOT NULL
         CONSTRAINT DF_GR_PROGRAMACION_TRANSMITIDO DEFAULT(0),
 
-    ACTIVO                BIT NOT NULL
+    ACTIVO                     BIT NOT NULL
         CONSTRAINT DF_GR_PROGRAMACION_ACTIVO DEFAULT(1),
 
-    FECHA_ALTA            DATETIME2 NOT NULL
+    ------------------------------------------------------------------------
+    -- AUDITORÍA
+    ------------------------------------------------------------------------
+
+    FECHA_ALTA                 DATETIME2 NOT NULL
         CONSTRAINT DF_GR_PROGRAMACION_FECHA_ALTA DEFAULT(SYSDATETIME()),
 
-    USUARIO_ALTA          NVARCHAR(100) NOT NULL,
+    USUARIO_ALTA               NVARCHAR(100) NOT NULL,
 
-    FECHA_MODIFICACION    DATETIME2 NULL,
+    FECHA_MODIFICACION         DATETIME2 NULL,
 
-    USUARIO_MODIFICACION  NVARCHAR(100) NULL,
+    USUARIO_MODIFICACION       NVARCHAR(100) NULL,
+
+    ------------------------------------------------------------------------
+    -- PRIMARY KEY
+    ------------------------------------------------------------------------
 
     CONSTRAINT PK_GR_PROGRAMACION
         PRIMARY KEY (ID_PROGRAMACION)
 );
 GO
+
+------------------------------------------------------------------------------
+-- ÍNDICES
+------------------------------------------------------------------------------
 
 CREATE INDEX IX_GR_PROGRAMACION_FECHA
 ON dbo.GR_PROGRAMACION(FECHA_PROGRAMACION);
@@ -56,6 +88,22 @@ GO
 CREATE INDEX IX_GR_PROGRAMACION_CAMPANIA
 ON dbo.GR_PROGRAMACION(ID_CAMPANIA);
 GO
+
+CREATE INDEX IX_GR_PROGRAMACION_PROGRAMMING
+ON dbo.GR_PROGRAMACION(PROGRAMMING_ID_DINESAT);
+GO
+
+CREATE INDEX IX_GR_PROGRAMACION_BLOCK
+ON dbo.GR_PROGRAMACION(PROGRAMBLOCK_ID_DINESAT);
+GO
+
+CREATE INDEX IX_GR_PROGRAMACION_EVENT
+ON dbo.GR_PROGRAMACION(PROGRAMEVENT_ID_DINESAT);
+GO
+
+------------------------------------------------------------------------------
+-- FOREIGN KEYS
+------------------------------------------------------------------------------
 
 ALTER TABLE dbo.GR_PROGRAMACION
 ADD CONSTRAINT FK_GR_PROGRAMACION_CAMPANIA

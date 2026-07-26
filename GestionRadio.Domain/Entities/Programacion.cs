@@ -12,17 +12,22 @@ public class Programacion
 
     public long IdVersion { get; set; }
 
+
     //=========================================
     // Emisora
     //=========================================
 
     public long IdEmisora { get; set; }
 
+
     //=========================================
-    // Fecha
+    // Fecha y hora
     //=========================================
 
     public DateOnly FechaProgramacion { get; set; }
+
+    public TimeOnly HoraProgramada { get; set; }
+
 
     //=========================================
     // Referencias Dinesat
@@ -34,14 +39,9 @@ public class Programacion
 
     public long? ProgramEventIdDinesat { get; set; }
 
-    //=========================================
-    // Horario
-    //=========================================
-
-    public TimeOnly HoraProgramada { get; set; }
 
     //=========================================
-    // Información del material
+    // Material Dinesat
     //=========================================
 
     public long MaterialIdDinesat { get; set; }
@@ -52,11 +52,13 @@ public class Programacion
 
     public int DuracionSegundos { get; set; }
 
+
     //=========================================
     // Orden
     //=========================================
 
     public int Orden { get; set; }
+
 
     //=========================================
     // Estado
@@ -65,6 +67,7 @@ public class Programacion
     public bool Transmitido { get; set; }
 
     public bool Activo { get; set; } = true;
+
 
     //=========================================
     // Auditoría

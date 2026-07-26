@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dinesat\Interfaces\" />
     <Folder Include="Logging\" />
     <Folder Include="Configuration\" />
     <Folder Include="Security\" />
