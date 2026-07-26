@@ -16,7 +16,13 @@ public class Parrilla
 
     public DateTime FechaCreacion { get; set; }
 
-    public ICollection<ParrillaDia> Dias { get; set; } = new List<ParrillaDia>();
+    public ICollection<ParrillaDia> Dias { get; set; }
+        = new List<ParrillaDia>();
 
-    public ICollection<ParrillaEvento> Eventos { get; set; } = new List<ParrillaEvento>();
+    public ICollection<ParrillaEvento> Eventos { get; set; }
+        = new List<ParrillaEvento>();
+
+    // NUEVO
+    public ICollection<ParrillaBloque> Bloques { get; set; }
+        = new List<ParrillaBloque>();
 }

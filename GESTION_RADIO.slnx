@@ -3,6 +3,7 @@
     <File Path="001_001_GR_Catalogos.sql" />
     <File Path="001_006_GR_PROGRAMACION.sql" />
     <File Path="002_001_GR_Parrillas.sql" />
+    <File Path="002_001_GR_Plantillas.sql" />
     <File Path="003_001_GR_VERSION.sql" />
   </Folder>
   <Folder Name="/Scripts/Scripts/" />

@@ -7,4 +7,7 @@ public class ParrillaDia
     public long ParrillaId { get; set; }
 
     public byte DiaSemana { get; set; }
+
+    // Navegación
+    public Parrilla? Parrilla { get; set; }
 }

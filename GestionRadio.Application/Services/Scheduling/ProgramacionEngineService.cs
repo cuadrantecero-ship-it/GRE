@@ -79,8 +79,13 @@ public sealed class ProgramacionEngineService : IProgramacionEngineService
         var material =
             await _materialResolver.ObtenerAsync(version.CodigoMaterial);
 
+        if (material.MaterialIdDinesat <= 0)
+        {
+            throw new Exception(
+                $"Material encontrado: Codigo={material.Codigo}, Id={material.MaterialIdDinesat}");
+        }
 
-        // 3. Obtener programación Dinesat.
+                // 3. Obtener programación Dinesat.
         var programming =
             await _programmingResolver.ObtenerAsync(request);
 
@@ -106,6 +111,11 @@ public sealed class ProgramacionEngineService : IProgramacionEngineService
                 material.MaterialIdDinesat,
                 "COM");
 
+        if (evento.MaterialId <= 0)
+        {
+            throw new Exception(
+                $"Evento construido con MaterialId={evento.MaterialId}");
+        }
 
         // Completar información del material.
         evento.MaterialCode = material.Codigo;
