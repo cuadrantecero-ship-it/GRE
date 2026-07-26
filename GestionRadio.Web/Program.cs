@@ -2,8 +2,10 @@ using Dapper;
 using GestionRadio.Application.Interfaces;
 using GestionRadio.Application.Mapping;
 using GestionRadio.Application.Services;
+using GestionRadio.Application.Services.Scheduling.Resolvers;
 using GestionRadio.Domain.Interfaces;
 using GestionRadio.Infrastructure.Dinesat;
+using GestionRadio.Infrastructure.Dinesat.Connection;
 using GestionRadio.Infrastructure.Persistence;
 using GestionRadio.Infrastructure.Repositories;
 using GestionRadio.Infrastructure.TypeHandlers;
@@ -26,9 +28,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(cfg => { }, typeof(ClienteProfile).Assembly);
 
 // ======================================
-// SQL Connection Factory
+// Connection Factories
 // ======================================
 builder.Services.AddSingleton<SqlConnectionFactory>();
+builder.Services.AddSingleton<DinesatConnectionFactory>();
 
 // ======================================
 // Repositories
@@ -37,15 +40,20 @@ builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ICampaniaRepository, CampaniaRepository>();
 builder.Services.AddScoped<IVersionRepository, VersionRepository>();
 builder.Services.AddScoped<IProgramacionRepository, ProgramacionRepository>();
-builder.Services.AddScoped<IDinesatProgrammingRepository, DinesatProgrammingRepository>();
-builder.Services.AddScoped<IRotationEngineService, RotationEngineService>();
 
 // Repositorios Dinesat
+builder.Services.AddScoped<IDinesatProgrammingRepository, DinesatProgrammingRepository>();
 builder.Services.AddScoped<IDinesatMaterialRepository, DinesatMaterialRepository>();
-builder.Services.AddScoped<MaterialRepository>();
-
 builder.Services.AddScoped<IDinesatProgramBlockRepository, DinesatProgramBlockRepository>();
 builder.Services.AddScoped<IDinesatProgramEventRepository, DinesatProgramEventRepository>();
+
+// MaterialRepository (si es utilizado directamente)
+builder.Services.AddScoped<MaterialRepository>();
+
+// ======================================
+// Resolvers
+// ======================================
+builder.Services.AddScoped<VersionResolver>();
 
 // ======================================
 // Services
@@ -54,10 +62,13 @@ builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<ICampaniaService, CampaniaService>();
 builder.Services.AddScoped<IVersionService, VersionService>();
 builder.Services.AddScoped<IProgramacionService, ProgramacionService>();
-builder.Services.AddScoped<IDinesatProgramEventService, DinesatProgramEventService>();
 
 // Servicios Dinesat
 builder.Services.AddScoped<IDinesatMaterialService, DinesatMaterialService>();
+builder.Services.AddScoped<IDinesatProgramEventService, DinesatProgramEventService>();
+
+// Motor de rotación
+builder.Services.AddScoped<IRotationEngineService, RotationEngineService>();
 
 // ======================================
 // Build
@@ -74,11 +85,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(

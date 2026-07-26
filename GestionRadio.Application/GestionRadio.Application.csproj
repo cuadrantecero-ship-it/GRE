@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\Dinesat\" />
     <Folder Include="Features\Clientes\DTOs\" />
     <Folder Include="Features\Clientes\Mapping\" />
     <Folder Include="Features\Clientes\Commands\" />

@@ -36,4 +36,10 @@ public class ProgramacionCreateDto
     public bool Transmitido { get; set; }
 
     public bool Activo { get; set; } = true;
+
+    public long? ProgrammingIdDinesat { get; set; }
+
+    public long? ProgramBlockIdDinesat { get; set; }
+
+    public long? ProgramEventIdDinesat { get; set; }
 }

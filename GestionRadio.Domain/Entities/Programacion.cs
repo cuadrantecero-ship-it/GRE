@@ -25,6 +25,16 @@ public class Programacion
     public DateOnly FechaProgramacion { get; set; }
 
     //=========================================
+    // Referencias Dinesat
+    //=========================================
+
+    public long? ProgrammingIdDinesat { get; set; }
+
+    public long? ProgramBlockIdDinesat { get; set; }
+
+    public long? ProgramEventIdDinesat { get; set; }
+
+    //=========================================
     // Horario
     //=========================================
 

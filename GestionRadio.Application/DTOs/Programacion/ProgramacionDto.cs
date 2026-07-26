@@ -16,6 +16,12 @@ public class ProgramacionDto
 
     public long MaterialIdDinesat { get; set; }
 
+    public long? ProgrammingIdDinesat { get; set; }
+
+    public long? ProgramBlockIdDinesat { get; set; }
+
+    public long? ProgramEventIdDinesat { get; set; }
+
     public string CodigoMaterial { get; set; } = string.Empty;
 
     public string TituloMaterial { get; set; } = string.Empty;
