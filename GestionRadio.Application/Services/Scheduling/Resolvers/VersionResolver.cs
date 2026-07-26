@@ -4,7 +4,7 @@ using GestionRadio.Domain.Interfaces;
 namespace GestionRadio.Application.Services.Scheduling.Resolvers;
 
 /// <summary>
-/// Obtiene una versión válida desde el ERP.
+/// Resuelve una versión válida del ERP.
 /// </summary>
 public sealed class VersionResolver
 {
@@ -12,20 +12,28 @@ public sealed class VersionResolver
 
     public VersionResolver(IVersionRepository versionRepository)
     {
-        _versionRepository = versionRepository;
+        _versionRepository = versionRepository
+            ?? throw new ArgumentNullException(nameof(versionRepository));
     }
 
+    /// <summary>
+    /// Obtiene una versión válida.
+    /// </summary>
     public async Task<VersionCampania> ObtenerAsync(long idVersion)
     {
         var version = await _versionRepository.ObtenerPorIdAsync(idVersion);
 
         if (version is null)
+        {
             throw new InvalidOperationException(
                 $"No existe la versión {idVersion}.");
+        }
 
         if (!version.Activo)
+        {
             throw new InvalidOperationException(
-                "La versión se encuentra desactivada.");
+                $"La versión {idVersion} se encuentra desactivada.");
+        }
 
         return version;
     }

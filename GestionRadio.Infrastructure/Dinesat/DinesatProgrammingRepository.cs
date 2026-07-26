@@ -83,4 +83,37 @@ ORDER BY PGMDATE DESC;";
 
         return resultado.ToList();
     }
+
+    /// <summary>
+    /// Obtiene la programación correspondiente a una fecha y estación.
+    /// PGMDATE en Dinesat se almacena como varchar con formato yyyy/MM/dd.
+    /// </summary>
+    public async Task<DinesatProgramming?> ObtenerPorFechaAsync(
+        DateOnly fecha,
+        long stationId)
+    {
+        const string sql = @"
+SELECT TOP (1)
+    PGMID       AS ProgrammingId,
+    STATIONID   AS StationId,
+    PGMDATE     AS Fecha,
+    PGMTYPE     AS ProgrammingTypeId,
+    PGMACTIVE   AS Activa
+FROM PROGRAMMING
+WHERE PGMDATE = @Fecha
+  AND STATIONID = @StationId
+ORDER BY PGMID;";
+
+        using var cn = (SqlConnection)_connectionFactory.CreateDinesatConnection();
+
+        await cn.OpenAsync();
+
+        return await cn.QueryFirstOrDefaultAsync<DinesatProgramming>(
+            sql,
+            new
+            {
+                Fecha = fecha.ToString("yyyy/MM/dd"),
+                StationId = stationId
+            });
+    }
 }

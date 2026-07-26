@@ -21,4 +21,11 @@ public interface IDinesatProgrammingRepository
     /// Obtiene todas las programaciones.
     /// </summary>
     Task<IReadOnlyList<DinesatProgramming>> ObtenerTodasAsync();
+
+    /// <summary>
+    /// Obtiene la programación correspondiente a una fecha y una estación.
+    /// </summary>
+    Task<DinesatProgramming?> ObtenerPorFechaAsync(
+        DateOnly fecha,
+        long stationId);
 }
