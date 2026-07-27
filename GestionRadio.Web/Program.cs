@@ -76,6 +76,8 @@ builder.Services.AddScoped<IParrillaService, ParrillaService>();
 // Servicios Dinesat
 builder.Services.AddScoped<IDinesatMaterialService, DinesatMaterialService>();
 builder.Services.AddScoped<IDinesatProgramEventService, DinesatProgramEventService>();
+builder.Services.AddScoped<IDinesatPublishRepository, DinesatPublishRepository>();
+builder.Services.AddScoped<IDinesatPublishService, DinesatPublishService>();
 builder.Services.AddScoped<ItemOrderCalculator>();
 builder.Services.AddScoped<MaterialResolver>();
 

@@ -33,6 +33,18 @@ public sealed class ProgramacionRepository : BaseRepository, IProgramacionReposi
             new { Id = id });
     }
 
+    public async Task<IEnumerable<Programacion>> ObtenerPorFechaAsync(DateOnly fecha)
+    {
+        using var connection = CreateConnection();
+
+        return await connection.QueryAsync<Programacion>(
+            ProgramacionSql.ObtenerPorFecha,
+            new
+            {
+                Fecha = fecha
+            });
+    }
+
     public async Task<long> InsertarAsync(Programacion programacion)
     {
         ArgumentNullException.ThrowIfNull(programacion);

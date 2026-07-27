@@ -8,6 +8,9 @@ public interface IProgramacionRepository
 
     Task<Programacion?> ObtenerPorIdAsync(long id);
 
+    // NUEVO
+    Task<IEnumerable<Programacion>> ObtenerPorFechaAsync(DateOnly fecha);
+
     Task<long> InsertarAsync(Programacion programacion);
 
     Task ActualizarAsync(Programacion programacion);
