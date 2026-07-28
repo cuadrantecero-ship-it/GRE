@@ -4,42 +4,44 @@ namespace GestionRadio.Application.DTOs.Programacion;
 
 public class ProgramacionCreateDto
 {
-    [Required]
-    public long IdCampania { get; set; }
+    //=========================================
+    // Emisora
+    //=========================================
 
     [Required]
-    public long IdVersion { get; set; }
+    public long EmisoraId { get; set; }
+
+    //=========================================
+    // Parrilla
+    //=========================================
 
     [Required]
-    public long IdEmisora { get; set; }
+    public long ParrillaId { get; set; }
+
+    //=========================================
+    // Fecha
+    //=========================================
 
     [Required]
-    public DateOnly FechaProgramacion { get; set; }
+    public DateOnly Fecha { get; set; }
 
-    [Required]
-    public TimeOnly HoraProgramada { get; set; }
+    //=========================================
+    // Dinesat
+    //=========================================
 
-    [Required]
-    public long MaterialIdDinesat { get; set; }
+    public long? DinesatProgrammingId { get; set; }
 
-    [Required]
-    public string CodigoMaterial { get; set; } = string.Empty;
+    //=========================================
+    // Estado
+    //=========================================
 
-    [Required]
-    public string TituloMaterial { get; set; } = string.Empty;
+    /// <summary>
+    /// 1 = Borrador
+    /// 2 = Generada
+    /// 3 = Sincronizada
+    /// 4 = Publicada
+    /// </summary>
+    public byte Estado { get; set; } = 1;
 
-    [Range(1, 3600)]
-    public int DuracionSegundos { get; set; }
-
-    public int Orden { get; set; }
-
-    public bool Transmitido { get; set; }
-
-    public bool Activo { get; set; } = true;
-
-    public long? ProgrammingIdDinesat { get; set; }
-
-    public long? ProgramBlockIdDinesat { get; set; }
-
-    public long? ProgramEventIdDinesat { get; set; }
+    public bool Activa { get; set; } = true;
 }

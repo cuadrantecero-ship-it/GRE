@@ -1,5 +1,4 @@
-﻿using GestionRadio.Application.DTOs.Programacion;
-using GestionRadio.Application.Interfaces;
+﻿using GestionRadio.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GestionRadio.Web.Controllers;
@@ -25,64 +24,17 @@ public class ProgramacionTestController : Controller
 
 
     [HttpGet]
-    public async Task<IActionResult> Ejecutar()
+    public async Task<IActionResult> Ejecutar(long id)
     {
-        var request = new ProgramacionCreateDto
+        if (id <= 0)
         {
-            // ==============================
-            // Datos ERP
-            // ==============================
-
-            IdCampania = 1,
-
-            // IMPORTANTE:
-            // Cambiar por una versión real de GR_VERSION
-            IdVersion = 1,
-
-
-            // ==============================
-            // Dinesat
-            // ==============================
-
-            // STATIONID real de Dinesat
-            IdEmisora = 1146901,
-
-
-            // Programación existente en Dinesat
-            FechaProgramacion =
-                DateOnly.FromDateTime(DateTime.Today),
-
-
-            // Bloque que vamos a probar
-            HoraProgramada =
-                new TimeOnly(12, 30),
-
-
-            // ==============================
-            // Material Dinesat
-            // ==============================
-
-            CodigoMaterial = "SPO00001",
-
-            TituloMaterial = "PRUEBA SPOT",
-
-            DuracionSegundos = 30,
-
-
-            // ==============================
-            // Estado
-            // ==============================
-
-            Orden = 0,
-
-            Transmitido = false,
-
-            Activo = true
-        };
+            return BadRequest(
+                "Debe enviar el ID de la programación.");
+        }
 
 
         var resultado =
-            await _engine.ProgramarAsync(request);
+            await _engine.ProgramarAsync(id);
 
 
         return Json(resultado);

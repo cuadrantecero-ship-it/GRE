@@ -1,6 +1,6 @@
-﻿namespace GestionRadio.Application.DTOs;
+﻿namespace GestionRadio.Application.DTOs.Parrilla;
 
-public class ParrillaUpdateDto
+public class ParrillaDto
 {
     public long ParrillaId { get; set; }
 
@@ -13,4 +13,6 @@ public class ParrillaUpdateDto
     public DateOnly? FechaFin { get; set; }
 
     public bool Activa { get; set; }
+
+    public DateTime FechaCreacion { get; set; }
 }

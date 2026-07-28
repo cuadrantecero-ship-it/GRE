@@ -2,35 +2,47 @@
 
 public class ProgramacionDto
 {
-    public long IdProgramacion { get; set; }
+    //=========================================
+    // Identificación
+    //=========================================
 
-    public long IdCampania { get; set; }
+    public long ProgramacionId { get; set; }
 
-    public long IdVersion { get; set; }
+    //=========================================
+    // Emisora
+    //=========================================
 
-    public long IdEmisora { get; set; }
+    public long EmisoraId { get; set; }
 
-    public DateOnly FechaProgramacion { get; set; }
+    //=========================================
+    // Parrilla
+    //=========================================
 
-    public TimeOnly HoraProgramada { get; set; }
+    public long ParrillaId { get; set; }
 
-    public long MaterialIdDinesat { get; set; }
+    //=========================================
+    // Fecha
+    //=========================================
 
-    public long? ProgrammingIdDinesat { get; set; }
+    public DateOnly Fecha { get; set; }
 
-    public long? ProgramBlockIdDinesat { get; set; }
+    //=========================================
+    // Dinesat
+    //=========================================
 
-    public long? ProgramEventIdDinesat { get; set; }
+    public long? DinesatProgrammingId { get; set; }
 
-    public string CodigoMaterial { get; set; } = string.Empty;
+    //=========================================
+    // Estado
+    //=========================================
 
-    public string TituloMaterial { get; set; } = string.Empty;
+    /// <summary>
+    /// 1 = Borrador
+    /// 2 = Generada
+    /// 3 = Sincronizada
+    /// 4 = Publicada
+    /// </summary>
+    public byte Estado { get; set; }
 
-    public int DuracionSegundos { get; set; }
-
-    public int Orden { get; set; }
-
-    public bool Transmitido { get; set; }
-
-    public bool Activo { get; set; }
+    public bool Activa { get; set; }
 }

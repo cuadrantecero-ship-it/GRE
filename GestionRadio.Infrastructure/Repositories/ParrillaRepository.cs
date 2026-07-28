@@ -8,10 +8,17 @@ namespace GestionRadio.Infrastructure.Repositories;
 
 public sealed class ParrillaRepository : BaseRepository, IParrillaRepository
 {
-    public ParrillaRepository(SqlConnectionFactory connectionFactory)
+    public ParrillaRepository(
+        SqlConnectionFactory connectionFactory)
         : base(connectionFactory)
     {
     }
+
+
+
+    //====================================================
+    // PARRILLAS
+    //====================================================
 
     public async Task<IEnumerable<Parrilla>> ObtenerTodasAsync()
     {
@@ -21,7 +28,10 @@ public sealed class ParrillaRepository : BaseRepository, IParrillaRepository
             ParrillasSql.ObtenerTodas);
     }
 
-    public async Task<Parrilla?> ObtenerPorIdAsync(long id)
+
+
+    public async Task<Parrilla?> ObtenerPorIdAsync(
+        long id)
     {
         using var db = CreateConnection();
 
@@ -33,7 +43,10 @@ public sealed class ParrillaRepository : BaseRepository, IParrillaRepository
             });
     }
 
-    public async Task<long> InsertarAsync(Parrilla parrilla)
+
+
+    public async Task<long> InsertarAsync(
+        Parrilla parrilla)
     {
         using var db = CreateConnection();
 
@@ -42,7 +55,10 @@ public sealed class ParrillaRepository : BaseRepository, IParrillaRepository
             parrilla);
     }
 
-    public async Task ActualizarAsync(Parrilla parrilla)
+
+
+    public async Task ActualizarAsync(
+        Parrilla parrilla)
     {
         using var db = CreateConnection();
 
@@ -51,7 +67,10 @@ public sealed class ParrillaRepository : BaseRepository, IParrillaRepository
             parrilla);
     }
 
-    public async Task EliminarAsync(long id)
+
+
+    public async Task EliminarAsync(
+        long id)
     {
         using var db = CreateConnection();
 
@@ -63,7 +82,15 @@ public sealed class ParrillaRepository : BaseRepository, IParrillaRepository
             });
     }
 
-    public async Task<IEnumerable<ParrillaEvento>> ObtenerEventosAsync(long parrillaId)
+
+
+
+    //====================================================
+    // EVENTOS DE PARRILLA
+    //====================================================
+
+    public async Task<IEnumerable<ParrillaEvento>> ObtenerEventosAsync(
+        long parrillaId)
     {
         using var db = CreateConnection();
 
@@ -75,11 +102,14 @@ public sealed class ParrillaRepository : BaseRepository, IParrillaRepository
             });
     }
 
+
+
     public async Task GuardarEventosAsync(
         long parrillaId,
         IEnumerable<ParrillaEvento> eventos)
     {
         using var db = CreateConnection();
+
 
         await db.ExecuteAsync(
             ParrillasSql.EliminarEventos,
@@ -88,15 +118,21 @@ public sealed class ParrillaRepository : BaseRepository, IParrillaRepository
                 ParrillaId = parrillaId
             });
 
+
+
         foreach (var evento in eventos)
         {
             evento.ParrillaId = parrillaId;
+
 
             await db.ExecuteAsync(
                 ParrillasSql.InsertarEvento,
                 evento);
         }
     }
+
+
+
 
     public async Task<IEnumerable<TipoEvento>> ObtenerTiposEventoAsync()
     {
@@ -106,11 +142,75 @@ public sealed class ParrillaRepository : BaseRepository, IParrillaRepository
             ParrillasSql.ObtenerTiposEvento);
     }
 
+
+
+
+    //====================================================
+    // CRUD EVENTOS INDIVIDUALES
+    //====================================================
+
+    public async Task InsertarEventoAsync(
+    ParrillaEvento evento)
+    {
+        using var db = CreateConnection();
+
+
+        Console.WriteLine("==============================");
+        Console.WriteLine($"ParrillaId: {evento.ParrillaId}");
+        Console.WriteLine($"TipoEventoId: {evento.TipoEventoId}");
+        Console.WriteLine($"Descripcion: {evento.Descripcion}");
+        Console.WriteLine("==============================");
+
+
+        await db.ExecuteAsync(
+            ParrillasSql.InsertarEvento,
+            evento);
+    }
+
+
+
+
+    public async Task ActualizarEventoAsync(
+        ParrillaEvento evento)
+    {
+        using var db = CreateConnection();
+
+
+        await db.ExecuteAsync(
+            ParrillasSql.ActualizarEvento,
+            evento);
+    }
+
+
+
+
+    public async Task EliminarEventoAsync(
+        long eventoId)
+    {
+        using var db = CreateConnection();
+
+
+        await db.ExecuteAsync(
+            ParrillasSql.EliminarEvento,
+            new
+            {
+                EventoId = eventoId
+            });
+    }
+
+
+
+
+    //====================================================
+    // TIMELINE PROGRAMACION
+    //====================================================
+
     public async Task<IEnumerable<ParrillaEvento>> ObtenerTimelineAsync(
         long emisoraId,
         DateOnly fecha)
     {
         using var db = CreateConnection();
+
 
         return await db.QueryAsync<ParrillaEvento>(
             ParrillasSql.ObtenerTimeline,

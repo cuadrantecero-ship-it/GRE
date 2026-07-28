@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GestionRadio.Application.DTOs.ParrillaDto>
+﻿@model IEnumerable<GestionRadio.Application.DTOs.Parrilla.ParrillaDto>
 
 @{
     ViewData["Title"] = "Parrillas";
@@ -9,14 +9,23 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
-            <h2>Parrillas de Programación</h2>
+
+            <h2 class="fw-bold">
+                <i class="bi bi-grid-3x3-gap"></i>
+                Parrillas de Programación
+            </h2>
+
             <small class="text-muted">
-                Configuración base de la programación de cada emisora
+                Configuración base de la programación de cada emisora.
             </small>
+
         </div>
 
+
         <a asp-action="Create"
-           class="btn btn-primary">
+           class="btn btn-success">
+
+            <i class="bi bi-plus-circle"></i>
 
             Nueva Parrilla
 
@@ -24,98 +33,202 @@
 
     </div>
 
-    <table class="table table-hover table-bordered align-middle">
 
-        <thead class="table-dark">
 
-            <tr>
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
 
-                <th>ID</th>
+            @TempData["Success"]
 
-                <th>Nombre</th>
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+            </button>
 
-                <th>Emisora</th>
+        </div>
+    }
 
-                <th>Inicio</th>
 
-                <th>Fin</th>
 
-                <th>Estado</th>
+    <div class="card shadow-sm">
 
-                <th width="220">Acciones</th>
+        <div class="card-header">
 
-            </tr>
+            <strong>Listado de Parrillas</strong>
 
-        </thead>
+        </div>
 
-        <tbody>
 
-            @foreach (var item in Model)
-            {
+        <div class="card-body">
 
-                <tr>
 
-                    <td>@item.ParrillaId</td>
+            <table class="table table-hover table-bordered align-middle">
 
-                    <td>@item.Nombre</td>
+                <thead class="table-dark">
 
-                    <td>@item.EmisoraId</td>
+                    <tr>
 
-                    <td>@item.FechaInicio</td>
+                        <th>ID</th>
 
-                    <td>@item.FechaFin</td>
+                        <th>Nombre</th>
 
-                    <td>
+                        <th>Emisora</th>
 
-                        @if (item.Activa)
+                        <th>Fecha Inicio</th>
+
+                        <th>Fecha Fin</th>
+
+                        <th>Estado</th>
+
+                        <th width="330">
+                            Acciones
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    @if (Model.Any())
+                    {
+
+                        foreach (var item in Model)
                         {
-                            <span class="badge bg-success">
-                                Activa
-                            </span>
+
+                            <tr>
+
+
+                                <td>
+                                    @item.ParrillaId
+                                </td>
+
+
+                                <td>
+                                    @item.Nombre
+                                </td>
+
+
+                                <td>
+                                    @item.EmisoraId
+                                </td>
+
+
+                                <td>
+                                    @item.FechaInicio
+                                </td>
+
+
+                                <td>
+                                    @item.FechaFin
+                                </td>
+
+
+                                <td>
+
+                                    @if (item.Activa)
+                                    {
+                                        <span class="badge bg-success">
+                                            Activa
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            Inactiva
+                                        </span>
+                                    }
+
+                                </td>
+
+
+                                <td>
+
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.ParrillaId"
+                                       class="btn btn-warning btn-sm">
+
+                                        <i class="bi bi-pencil"></i>
+
+                                        Editar
+
+                                    </a>
+
+
+
+                                    <a asp-action="Eventos"
+                                       asp-route-id="@item.ParrillaId"
+                                       class="btn btn-info btn-sm text-white">
+
+                                        <i class="bi bi-clock-history"></i>
+
+                                        Eventos
+
+                                    </a>
+
+
+
+                                    <form asp-action="Delete"
+                                          asp-route-id="@item.ParrillaId"
+                                          method="post"
+                                          class="d-inline">
+
+
+                                        @Html.AntiForgeryToken()
+
+
+                                        <button type="submit"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('¿Eliminar la parrilla?');">
+
+                                            <i class="bi bi-trash"></i>
+
+                                            Eliminar
+
+                                        </button>
+
+
+                                    </form>
+
+
+                                </td>
+
+
+                            </tr>
+
                         }
-                        else
-                        {
-                            <span class="badge bg-danger">
-                                Inactiva
-                            </span>
-                        }
 
-                    </td>
+                    }
+                    else
+                    {
 
-                    <td>
+                        <tr>
 
-                        <a asp-action="Edit"
-                           asp-route-id="@item.ParrillaId"
-                           class="btn btn-warning btn-sm">
+                            <td colspan="7"
+                                class="text-center text-muted">
 
-                            Editar
+                                No existen parrillas registradas.
 
-                        </a>
+                            </td>
 
-                        <form asp-action="Delete"
-                              asp-route-id="@item.ParrillaId"
-                              method="post"
-                              class="d-inline">
+                        </tr>
 
-                            @Html.AntiForgeryToken()
+                    }
 
-                            <button class="btn btn-danger btn-sm"
-                                    onclick="return confirm('¿Eliminar la parrilla?')">
 
-                                Eliminar
+                </tbody>
 
-                            </button>
 
-                        </form>
+            </table>
 
-                    </td>
 
-                </tr>
+        </div>
 
-            }
+    </div>
 
-        </tbody>
-
-    </table>
 
 </div>

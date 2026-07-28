@@ -8,7 +8,7 @@
 
     <div class="row">
 
-        <div class="col-lg-10 mx-auto">
+        <div class="col-lg-8 mx-auto">
 
             <div class="card shadow">
 
@@ -21,104 +21,137 @@
 
                 </div>
 
+
                 <div class="card-body">
 
                     <form asp-action="Create" method="post">
 
                         @Html.AntiForgeryToken()
 
+
                         <div asp-validation-summary="ModelOnly"
                              class="text-danger mb-3">
                         </div>
 
-                        <div class="row">
 
-                            <div class="col-md-4 mb-3">
 
-                                <label asp-for="FechaProgramacion"
-                                       class="form-label fw-bold">
-                                </label>
+                        <!-- FECHA -->
 
-                                <input asp-for="FechaProgramacion"
-                                       class="form-control"
-                                       type="date" />
+                        <div class="mb-3">
 
-                                <span asp-validation-for="FechaProgramacion"
-                                      class="text-danger">
-                                </span>
+                            <label asp-for="Fecha"
+                                   class="form-label fw-bold">
+                                Fecha Programación
+                            </label>
 
-                            </div>
 
-                            <div class="col-md-4 mb-3">
+                            <input asp-for="Fecha"
+                                   class="form-control"
+                                   type="date" />
 
-                                <label asp-for="HoraProgramada"
-                                       class="form-label fw-bold">
-                                </label>
 
-                                <input asp-for="HoraProgramada"
-                                       class="form-control"
-                                       type="time" />
-
-                                <span asp-validation-for="HoraProgramada"
-                                      class="text-danger">
-                                </span>
-
-                            </div>
-
-                            <div class="col-md-4 mb-3">
-
-                                <label asp-for="Orden"
-                                       class="form-label fw-bold">
-                                </label>
-
-                                <input asp-for="Orden"
-                                       class="form-control" />
-
-                                <span asp-validation-for="Orden"
-                                      class="text-danger">
-                                </span>
-
-                            </div>
+                            <span asp-validation-for="Fecha"
+                                  class="text-danger">
+                            </span>
 
                         </div>
 
-                        <div class="row">
 
-                            <div class="col-md-6">
 
-                                <div class="form-check mt-4">
 
-                                    <input asp-for="Transmitido"
-                                           class="form-check-input" />
+                        <!-- EMISORA -->
 
-                                    <label asp-for="Transmitido"
-                                           class="form-check-label">
-                                    </label>
+                        <div class="mb-3">
 
-                                </div>
+                            <label asp-for="EmisoraId"
+                                   class="form-label fw-bold">
+                                Emisora
+                            </label>
 
-                            </div>
 
-                            <div class="col-md-6">
+                            <select asp-for="EmisoraId"
+                                    class="form-select">
 
-                                <div class="form-check mt-4">
 
-                                    <input asp-for="Activo"
-                                           class="form-check-input" />
+                                <option value="">
+                                    -- Seleccione emisora --
+                                </option>
 
-                                    <label asp-for="Activo"
-                                           class="form-check-label">
-                                    </label>
 
-                                </div>
+                                @if (ViewBag.Emisoras != null)
+                                {
+                                    foreach (var emisora in ViewBag.Emisoras)
+                                    {
+                                        <option value="@emisora.EmisoraId">
 
-                            </div>
+                                            @emisora.Nombre (@emisora.Siglas)
+
+                                        </option>
+                                    }
+                                }
+
+
+                            </select>
+
+
+                            <span asp-validation-for="EmisoraId"
+                                  class="text-danger">
+                            </span>
 
                         </div>
+
+
+
+
+                        <!-- PARRILLA -->
+
+                        <div class="mb-3">
+
+                            <label asp-for="ParrillaId"
+                                   class="form-label fw-bold">
+                                Parrilla
+                            </label>
+
+
+                            <select asp-for="ParrillaId"
+                                    class="form-select">
+
+
+                                <option value="">
+                                    -- Seleccione parrilla --
+                                </option>
+
+
+                                @if (ViewBag.Parrillas != null)
+                                {
+                                    foreach (var parrilla in ViewBag.Parrillas)
+                                    {
+                                        <option value="@parrilla.ParrillaId">
+
+                                            @parrilla.Nombre
+
+                                        </option>
+                                    }
+                                }
+
+
+                            </select>
+
+
+                            <span asp-validation-for="ParrillaId"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
 
                         <hr />
 
+
+
                         <div class="d-flex justify-content-end gap-2">
+
 
                             <a asp-action="Index"
                                class="btn btn-secondary">
@@ -129,6 +162,8 @@
 
                             </a>
 
+
+
                             <button type="submit"
                                     class="btn btn-success">
 
@@ -138,7 +173,9 @@
 
                             </button>
 
+
                         </div>
+
 
                     </form>
 
@@ -151,6 +188,7 @@
     </div>
 
 </div>
+
 
 @section Scripts
 {

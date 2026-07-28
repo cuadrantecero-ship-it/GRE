@@ -3,9 +3,9 @@
 namespace GestionRadio.Application.Interfaces;
 
 /// <summary>
-/// Contrato del Motor de Programación.
+/// Motor de sincronización entre GESTIÓN RADIO y Dinesat.
 /// </summary>
 public interface IProgramacionEngineService
 {
-    Task<ProgramacionDto> ProgramarAsync(ProgramacionCreateDto request);
+    Task<ProgramacionDto> ProgramarAsync(long programacionId);
 }

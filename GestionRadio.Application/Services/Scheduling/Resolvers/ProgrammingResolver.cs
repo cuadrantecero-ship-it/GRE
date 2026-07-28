@@ -27,14 +27,15 @@ public sealed class ProgrammingResolver
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var programming = await _programmingRepository.ObtenerPorFechaAsync(
-            request.FechaProgramacion,
-            request.IdEmisora);
+        var programming =
+            await _programmingRepository.ObtenerPorFechaAsync(
+                request.Fecha,
+                request.EmisoraId);
 
         if (programming is null)
         {
             throw new InvalidOperationException(
-                $"No existe una programación de Dinesat para la fecha {request.FechaProgramacion:yyyy-MM-dd} y la emisora {request.IdEmisora}.");
+                $"No existe una programación de Dinesat para la fecha {request.Fecha:yyyy-MM-dd} y la emisora {request.EmisoraId}.");
         }
 
         return programming;

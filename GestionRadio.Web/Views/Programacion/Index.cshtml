@@ -15,9 +15,10 @@
             </h2>
 
             <small class="text-muted">
-                Administración de la programación de materiales.
+                Administración de programaciones.
             </small>
         </div>
+
 
         <div>
             <a asp-action="Create"
@@ -30,6 +31,7 @@
         </div>
 
     </div>
+
 
     @if (TempData["Success"] != null)
     {
@@ -45,6 +47,8 @@
         </div>
     }
 
+
+
     <div class="card shadow-sm">
 
         <div class="card-header">
@@ -52,6 +56,7 @@
             <strong>Listado</strong>
 
         </div>
+
 
         <div class="card-body">
 
@@ -63,13 +68,13 @@
 
                         <th>Fecha</th>
 
-                        <th>Hora</th>
+                        <th>Emisora</th>
 
-                        <th>Orden</th>
+                        <th>Parrilla</th>
 
-                        <th>Transmitido</th>
+                        <th>Estado</th>
 
-                        <th>Activo</th>
+                        <th>Activa</th>
 
                         <th width="180"></th>
 
@@ -77,89 +82,111 @@
 
                 </thead>
 
+
                 <tbody>
+
 
                     @if (Model.Any())
                     {
+
                         foreach (var item in Model)
                         {
+
                             <tr>
 
+
+                                <td>
+                                    @item.Fecha.ToString("dd/MM/yyyy")
+                                </td>
+
+
+                                <td>
+                                    @item.EmisoraId
+                                </td>
+
+
+                                <td>
+                                    @item.ParrillaId
+                                </td>
+
+
                                 <td>
 
-                                    @item.FechaProgramacion.ToString("dd/MM/yyyy")
+                                    @(item.Estado switch
+                                    {
+                                        1 => "Borrador",
+                                        2 => "Generada",
+                                        3 => "Sincronizada",
+                                        _ => "Desconocido"
+                                    })
 
                                 </td>
 
+
                                 <td>
 
-                                    @item.HoraProgramada
+                                    @(item.Activa ? "Activa" : "Inactiva")
 
                                 </td>
 
-                                <td>
-
-                                    @item.Orden
-
-                                </td>
 
                                 <td>
 
-                                    @(item.Transmitido ? "Sí" : "No")
-
-                                </td>
-
-                                <td>
-
-                                    @(item.Activo ? "Activo" : "Inactivo")
-
-                                </td>
-
-                                <td>
 
                                     <a asp-action="Edit"
-                                       asp-route-id="@item.IdProgramacion"
+                                       asp-route-id="@item.ProgramacionId"
                                        class="btn btn-primary btn-sm">
 
                                         Editar
 
                                     </a>
 
+
                                     <form asp-action="Delete"
-                                          asp-route-id="@item.IdProgramacion"
+                                          asp-route-id="@item.ProgramacionId"
                                           method="post"
                                           class="d-inline">
 
+
                                         @Html.AntiForgeryToken()
+
 
                                         <button type="submit"
                                                 class="btn btn-danger btn-sm"
-                                                onclick="return confirm('¿Desea eliminar este registro?');">
+                                                onclick="return confirm('¿Desea eliminar esta programación?');">
 
                                             Eliminar
 
                                         </button>
 
+
                                     </form>
+
 
                                 </td>
 
+
                             </tr>
+
                         }
+
                     }
                     else
                     {
+
                         <tr>
 
                             <td colspan="6"
                                 class="text-center text-muted">
 
-                                No existen registros.
+                                No existen programaciones.
 
                             </td>
 
                         </tr>
+
                     }
+
 
                 </tbody>
 

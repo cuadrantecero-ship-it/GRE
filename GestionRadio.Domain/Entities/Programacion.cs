@@ -6,78 +6,62 @@ public class Programacion
     // Identificación
     //=========================================
 
-    public long IdProgramacion { get; set; }
-
-    public long IdCampania { get; set; }
-
-    public long IdVersion { get; set; }
-
+    public long ProgramacionId { get; set; }
 
     //=========================================
     // Emisora
     //=========================================
 
-    public long IdEmisora { get; set; }
-
-
-    //=========================================
-    // Fecha y hora
-    //=========================================
-
-    public DateOnly FechaProgramacion { get; set; }
-
-    public TimeOnly HoraProgramada { get; set; }
-
+    public long EmisoraId { get; set; }
 
     //=========================================
-    // Referencias Dinesat
+    // Parrilla
     //=========================================
 
-    public long? ProgrammingIdDinesat { get; set; }
-
-    public long? ProgramBlockIdDinesat { get; set; }
-
-    public long? ProgramEventIdDinesat { get; set; }
-
+    public long ParrillaId { get; set; }
 
     //=========================================
-    // Material Dinesat
+    // Fecha
     //=========================================
 
-    public long MaterialIdDinesat { get; set; }
-
-    public string CodigoMaterial { get; set; } = string.Empty;
-
-    public string TituloMaterial { get; set; } = string.Empty;
-
-    public int DuracionSegundos { get; set; }
-
+    public DateOnly Fecha { get; set; }
 
     //=========================================
-    // Orden
+    // Referencia Dinesat
     //=========================================
 
-    public int Orden { get; set; }
-
+    public long? DinesatProgrammingId { get; set; }
 
     //=========================================
     // Estado
     //=========================================
 
-    public bool Transmitido { get; set; }
+    /// <summary>
+    /// 1 = Borrador
+    /// 2 = Generada
+    /// 3 = Sincronizada
+    /// 4 = Publicada
+    /// </summary>
+    public byte Estado { get; set; } = 1;
 
-    public bool Activo { get; set; } = true;
-
+    public bool Activa { get; set; } = true;
 
     //=========================================
     // Auditoría
     //=========================================
 
-    public DateTime FechaAlta { get; set; }
+    public DateTime FechaCreacion { get; set; }
 
-    public string UsuarioAlta { get; set; } = string.Empty;
+    public string UsuarioCreacion { get; set; } = string.Empty;
 
     public DateTime? FechaModificacion { get; set; }
 
     public string? UsuarioModificacion { get; set; }
+
+    //=========================================
+    // Navegación
+    //=========================================
+
+    public ICollection<ProgramacionDetalle> Detalles { get; set; }
+        = new List<ProgramacionDetalle>();
 }

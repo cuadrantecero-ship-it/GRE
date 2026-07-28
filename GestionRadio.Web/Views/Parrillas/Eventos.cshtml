@@ -1,141 +1,117 @@
-﻿@model IEnumerable<GestionRadio.Application.DTOs.Parrillas.ParrillaEventoDto>
+﻿@model IEnumerable<GestionRadio.Application.DTOs.Parrilla.ParrillaEventoDto>
 
 @{
-    ViewData["Title"] = "Programación Base";
+    ViewData["Title"] = "Eventos de Parrilla";
+
     var parrillaId = (long)ViewBag.ParrillaId;
 }
 
+
 <div class="container-fluid">
+
 
     <div class="d-flex justify-content-between align-items-center mb-4">
 
+
         <div>
-            <h2 class="mb-0">PROGRAMACIÓN BASE</h2>
+
+            <h2 class="fw-bold">
+
+                <i class="bi bi-clock-history"></i>
+
+                Eventos de Parrilla
+
+            </h2>
+
+
             <small class="text-muted">
-                Configuración de la parrilla de la emisora
+
+                Línea de tiempo de programación
+
             </small>
-        </div>
-
-        <div>
-
-            <a asp-action="NuevoEvento"
-               asp-route-parrillaId="@parrillaId"
-               class="btn btn-primary">
-
-                <i class="bi bi-plus-circle"></i>
-                Nuevo Evento
-
-            </a>
-
-            <a asp-action="Index"
-               class="btn btn-secondary">
-
-                Regresar
-
-            </a>
 
         </div>
+
+
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+
+            Regresar
+
+        </a>
+
 
     </div>
 
-    <div class="card shadow-sm">
 
-        <div class="card-body p-0">
 
-            <table class="table table-hover table-striped align-middle mb-0">
+
+    <div class="card shadow">
+
+
+        <div class="card-header bg-primary text-white">
+
+            Parrilla ID: @parrillaId
+
+        </div>
+
+
+
+
+        <div class="card-body">
+
+
+            <table class="table table-bordered table-hover align-middle">
+
 
                 <thead class="table-dark">
 
+
                     <tr>
 
-                        <th style="width:100px">
+                        <th>
+                            Orden
+                        </th>
+
+
+                        <th>
                             Hora
                         </th>
 
-                        <th style="width:180px">
-                            Tipo
+
+                        <th>
+                            Tipo Evento
                         </th>
+
 
                         <th>
                             Descripción
                         </th>
 
-                        <th style="width:130px">
+
+                        <th>
                             Publicidad
                         </th>
 
-                        <th style="width:130px">
-                            Duración
-                        </th>
-
-                        <th style="width:80px">
-                            Orden
-                        </th>
 
                     </tr>
 
+
                 </thead>
+
+
 
                 <tbody>
 
-                    @if (!Model.Any())
-                    {
-                        <tr>
-
-                            <td colspan="6"
-                                class="text-center p-5">
-
-                                No existen eventos configurados.
-
-                            </td>
-
-                        </tr>
-                    }
 
                     @foreach (var item in Model)
                     {
+
                         <tr>
 
-                            <td>
-
-                                @item.Hora
-
-                            </td>
-
-                            <td>
-
-                                @item.TipoEventoId
-
-                            </td>
-
-                            <td>
-
-                                @item.Descripcion
-
-                            </td>
-
-                            <td>
-
-                                @if (item.PermitePublicidad)
-                                {
-                                    <span class="badge bg-success">
-                                        SI
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-secondary">
-                                        NO
-                                    </span>
-                                }
-
-                            </td>
-
-                            <td>
-
-                                @item.DuracionMaximaSegundos seg.
-
-                            </td>
 
                             <td>
 
@@ -143,15 +119,75 @@
 
                             </td>
 
+
+
+                            <td>
+
+                                @item.Hora.ToString(@"hh\:mm")
+
+                            </td>
+
+
+
+                            <td>
+
+                                @item.TipoEventoId
+
+                            </td>
+
+
+
+                            <td>
+
+                                @item.Descripcion
+
+                            </td>
+
+
+
+                            <td>
+
+
+                                @if (item.PermitePublicidad)
+                                {
+
+                                    <span class="badge bg-success">
+
+                                        Sí
+
+                                    </span>
+
+                                }
+                                else
+                                {
+
+                                    <span class="badge bg-secondary">
+
+                                        No
+
+                                    </span>
+
+                                }
+
+
+                            </td>
+
+
                         </tr>
+
                     }
+
 
                 </tbody>
 
+
             </table>
+
 
         </div>
 
+
     </div>
+
 
 </div>

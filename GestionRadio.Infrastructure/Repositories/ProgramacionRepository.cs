@@ -30,7 +30,10 @@ public sealed class ProgramacionRepository : BaseRepository, IProgramacionReposi
 
         return await connection.QueryFirstOrDefaultAsync<Programacion>(
             ProgramacionSql.ObtenerPorId,
-            new { Id = id });
+            new
+            {
+                Id = id
+            });
     }
 
     public async Task<IEnumerable<Programacion>> ObtenerPorFechaAsync(DateOnly fecha)
@@ -41,7 +44,7 @@ public sealed class ProgramacionRepository : BaseRepository, IProgramacionReposi
             ProgramacionSql.ObtenerPorFecha,
             new
             {
-                Fecha = fecha
+                Fecha = fecha.ToDateTime(TimeOnly.MinValue)
             });
     }
 
@@ -76,6 +79,9 @@ public sealed class ProgramacionRepository : BaseRepository, IProgramacionReposi
 
         await connection.ExecuteAsync(
             ProgramacionSql.EliminarLogico,
-            new { Id = id });
+            new
+            {
+                Id = id
+            });
     }
 }

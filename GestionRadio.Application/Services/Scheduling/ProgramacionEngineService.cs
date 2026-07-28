@@ -1,193 +1,160 @@
 ﻿using GestionRadio.Application.DTOs.Programacion;
 using GestionRadio.Application.Interfaces;
-using GestionRadio.Application.Scheduling.Engine;
-using GestionRadio.Application.Services.Scheduling.Builders;
-using GestionRadio.Application.Services.Scheduling.Resolvers;
 using GestionRadio.Domain.Entities;
 using GestionRadio.Domain.Interfaces;
 
 namespace GestionRadio.Application.Services.Scheduling;
 
 /// <summary>
-/// Motor de Programación.
-/// Coordina la programación entre GESTIÓN RADIO y Dinesat.
+/// Motor de sincronización entre GESTIÓN RADIO y Dinesat.
+/// Primera versión funcional.
 /// </summary>
 public sealed class ProgramacionEngineService : IProgramacionEngineService
 {
-    private readonly VersionResolver _versionResolver;
-    private readonly MaterialResolver _materialResolver;
-    private readonly BlockResolver _blockResolver;
-    private readonly ProgrammingResolver _programmingResolver;
-    private readonly ItemOrderCalculator _itemOrderCalculator;
-    private readonly ProgramEventBuilder _programEventBuilder;
-
-    private readonly IDinesatProgramEventRepository _programEventRepository;
     private readonly IProgramacionRepository _programacionRepository;
-
+    private readonly IProgramacionDetalleRepository _detalleRepository;
+    private readonly IDinesatMaterialRepository _materialRepository;
+    private readonly IDinesatProgramEventRepository _eventRepository;
 
     public ProgramacionEngineService(
-        VersionResolver versionResolver,
-        MaterialResolver materialResolver,
-        BlockResolver blockResolver,
-        ProgrammingResolver programmingResolver,
-        ItemOrderCalculator itemOrderCalculator,
-        ProgramEventBuilder programEventBuilder,
-        IDinesatProgramEventRepository programEventRepository,
-        IProgramacionRepository programacionRepository)
+        IProgramacionRepository programacionRepository,
+        IProgramacionDetalleRepository detalleRepository,
+        IDinesatMaterialRepository materialRepository,
+        IDinesatProgramEventRepository eventRepository)
     {
-        _versionResolver = versionResolver
-            ?? throw new ArgumentNullException(nameof(versionResolver));
-
-        _materialResolver = materialResolver
-            ?? throw new ArgumentNullException(nameof(materialResolver));
-
-        _blockResolver = blockResolver
-            ?? throw new ArgumentNullException(nameof(blockResolver));
-
-        _programmingResolver = programmingResolver
-            ?? throw new ArgumentNullException(nameof(programmingResolver));
-
-        _itemOrderCalculator = itemOrderCalculator
-            ?? throw new ArgumentNullException(nameof(itemOrderCalculator));
-
-        _programEventBuilder = programEventBuilder
-            ?? throw new ArgumentNullException(nameof(programEventBuilder));
-
-        _programEventRepository = programEventRepository
-            ?? throw new ArgumentNullException(nameof(programEventRepository));
-
         _programacionRepository = programacionRepository
             ?? throw new ArgumentNullException(nameof(programacionRepository));
+
+        _detalleRepository = detalleRepository
+            ?? throw new ArgumentNullException(nameof(detalleRepository));
+
+        _materialRepository = materialRepository
+            ?? throw new ArgumentNullException(nameof(materialRepository));
+
+        _eventRepository = eventRepository
+            ?? throw new ArgumentNullException(nameof(eventRepository));
     }
 
 
-    /// <summary>
-    /// Programa una versión en Dinesat y registra la operación en el ERP.
-    /// </summary>
-    public async Task<ProgramacionDto> ProgramarAsync(
-        ProgramacionCreateDto request)
+    public async Task<ProgramacionDto> ProgramarAsync(long programacionId)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        if (programacionId <= 0)
+            throw new ArgumentOutOfRangeException(nameof(programacionId));
 
 
-        // 1. Obtener versión ERP.
-        var version =
-            await _versionResolver.ObtenerAsync(request.IdVersion);
+        var programacion =
+            await _programacionRepository.ObtenerPorIdAsync(programacionId);
 
 
-        // 2. Obtener material desde Dinesat.
-        var material =
-            await _materialResolver.ObtenerAsync(version.CodigoMaterial);
-
-        if (material.MaterialIdDinesat <= 0)
+        if (programacion is null)
         {
-            throw new Exception(
-                $"Material encontrado: Codigo={material.Codigo}, Id={material.MaterialIdDinesat}");
+            throw new InvalidOperationException(
+                "La programación no existe.");
         }
 
-                // 3. Obtener programación Dinesat.
-        var programming =
-            await _programmingResolver.ObtenerAsync(request);
+
+        var detalles =
+            await _detalleRepository.ObtenerPorProgramacionAsync(
+                programacionId);
 
 
-        // 4. Obtener bloque horario.
-        var block =
-            await _blockResolver.ObtenerAsync(
-                programming.ProgrammingId,
-                request.HoraProgramada);
-
-
-        // 5. Calcular ITEMORDER.
-        var itemOrder =
-            await _itemOrderCalculator.ObtenerSiguienteAsync(
-                block.ProgramBlockId);
-
-
-        // 6. Crear evento Dinesat.
-        var evento =
-            _programEventBuilder.ConstruirSpot(
-                block.ProgramBlockId,
-                itemOrder,
-                material.MaterialIdDinesat,
-                "COM");
-
-        if (evento.MaterialId <= 0)
+        foreach (var detalle in detalles)
         {
-            throw new Exception(
-                $"Evento construido con MaterialId={evento.MaterialId}");
+            if (detalle.Sincronizado)
+                continue;
+
+
+            if (string.IsNullOrWhiteSpace(detalle.CodigoMaterial))
+            {
+                throw new InvalidOperationException(
+                    $"El detalle {detalle.ProgramacionDetalleId} no tiene código de material.");
+            }
+
+
+            if (!detalle.DinesatProgramBlockId.HasValue)
+            {
+                throw new InvalidOperationException(
+                    $"El detalle {detalle.ProgramacionDetalleId} no tiene bloque Dinesat.");
+            }
+
+
+            var material =
+                await _materialRepository.ObtenerPorCodigoAsync(
+                    detalle.CodigoMaterial);
+
+
+            if (material is null)
+            {
+                throw new InvalidOperationException(
+                    $"No existe el material {detalle.CodigoMaterial} en Dinesat.");
+            }
+
+
+            var itemOrder =
+                await _eventRepository.ObtenerSiguienteItemOrderAsync(
+                    detalle.DinesatProgramBlockId.Value);
+
+
+            var evento = new DinesatProgramEvent
+            {
+                ProgramBlockId =
+                    detalle.DinesatProgramBlockId.Value,
+
+                ItemOrder = itemOrder,
+
+                MaterialId =
+                    material.MaterialIdDinesat,
+
+                MaterialCode =
+                    material.Codigo,
+
+                MaterialTitle =
+                    material.Titulo,
+
+                LengthFrames =
+                    detalle.DuracionSegundos,
+
+                Condition = 0,
+
+                TrafficCode = "COM",
+
+                TrafficIndex = 0,
+
+                LiveDescription = null,
+
+                LiveLength = 0
+            };
+
+
+            var programEventId =
+                await _eventRepository.InsertarAsync(evento);
+
+
+            detalle.DinesatProgramEventId = programEventId;
+            detalle.DinesatMaterialId = material.MaterialIdDinesat;
+
+            detalle.CodigoMaterial = material.Codigo;
+            detalle.TituloMaterial = material.Titulo;
+
+            detalle.Sincronizado = true;
+
+            detalle.FechaModificacion = DateTime.Now;
+            detalle.UsuarioModificacion = "ADMIN";
+
+
+            await _detalleRepository.ActualizarAsync(detalle);
         }
 
-        // Completar información del material.
-        evento.MaterialCode = material.Codigo;
-        evento.MaterialTitle = material.Titulo;
 
-
-        // 7. Insertar PROGRAMEVENT.
-        var programEventId =
-            await _programEventRepository.InsertarAsync(evento);
-
-
-        // 8. Crear registro ERP.
-        var programacion = new Programacion
-        {
-            IdCampania = request.IdCampania,
-            IdVersion = request.IdVersion,
-            IdEmisora = request.IdEmisora,
-
-            FechaProgramacion = request.FechaProgramacion,
-            HoraProgramada = request.HoraProgramada,
-
-            ProgrammingIdDinesat = programming.ProgrammingId,
-            ProgramBlockIdDinesat = block.ProgramBlockId,
-            ProgramEventIdDinesat = programEventId,
-
-            MaterialIdDinesat = material.MaterialIdDinesat,
-            CodigoMaterial = material.Codigo,
-            TituloMaterial = material.Titulo,
-            DuracionSegundos = request.DuracionSegundos,
-
-            Orden = itemOrder,
-
-            Transmitido = false,
-            Activo = true,
-
-            FechaAlta = DateTime.Now,
-            UsuarioAlta = "ADMIN"
-        };
-
-
-        // 9. Guardar GR_PROGRAMACION.
-        var idProgramacion =
-            await _programacionRepository.InsertarAsync(programacion);
-
-
-        // 10. Respuesta.
         return new ProgramacionDto
         {
-            IdProgramacion = idProgramacion,
-
-            IdCampania = programacion.IdCampania,
-            IdVersion = programacion.IdVersion,
-            IdEmisora = programacion.IdEmisora,
-
-            FechaProgramacion = programacion.FechaProgramacion,
-            HoraProgramada = programacion.HoraProgramada,
-
-            MaterialIdDinesat = programacion.MaterialIdDinesat,
-
-            ProgrammingIdDinesat = programacion.ProgrammingIdDinesat,
-            ProgramBlockIdDinesat = programacion.ProgramBlockIdDinesat,
-            ProgramEventIdDinesat = programacion.ProgramEventIdDinesat,
-
-            CodigoMaterial = programacion.CodigoMaterial,
-            TituloMaterial = programacion.TituloMaterial,
-
-            DuracionSegundos = programacion.DuracionSegundos,
-
-            Orden = programacion.Orden,
-
-            Transmitido = programacion.Transmitido,
-            Activo = programacion.Activo
+            ProgramacionId = programacion.ProgramacionId,
+            EmisoraId = programacion.EmisoraId,
+            ParrillaId = programacion.ParrillaId,
+            Fecha = programacion.Fecha,
+            DinesatProgrammingId = programacion.DinesatProgrammingId,
+            Estado = 3,
+            Activa = programacion.Activa
         };
     }
 }

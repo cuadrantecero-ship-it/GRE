@@ -1,41 +1,56 @@
 SET NOCOUNT ON;
 GO
 
+
 /*==============================================================*/
-/* ELIMINAR TABLAS (SOLO SI EXISTEN)                             */
+/* LIMPIEZA TABLAS                                              */
 /*==============================================================*/
 
-IF OBJECT_ID('dbo.GR_PARRILLA_EVENTO', 'U') IS NOT NULL
+IF OBJECT_ID('dbo.GR_PARRILLA_EVENTO','U') IS NOT NULL
     DROP TABLE dbo.GR_PARRILLA_EVENTO;
 GO
 
-IF OBJECT_ID('dbo.GR_PARRILLA_DIA', 'U') IS NOT NULL
+
+IF OBJECT_ID('dbo.GR_PARRILLA_DIA','U') IS NOT NULL
     DROP TABLE dbo.GR_PARRILLA_DIA;
 GO
 
-IF OBJECT_ID('dbo.GR_PARRILLA', 'U') IS NOT NULL
+
+IF OBJECT_ID('dbo.GR_PARRILLA','U') IS NOT NULL
     DROP TABLE dbo.GR_PARRILLA;
 GO
 
-IF OBJECT_ID('dbo.GR_TIPO_EVENTO', 'U') IS NOT NULL
+
+IF OBJECT_ID('dbo.GR_TIPO_EVENTO','U') IS NOT NULL
     DROP TABLE dbo.GR_TIPO_EVENTO;
 GO
 
+
+
+
 /*==============================================================*/
-/* CATÁLOGO DE TIPOS                                             */
+/* CATALOGO TIPOS DE EVENTO                                    */
 /*==============================================================*/
 
 CREATE TABLE dbo.GR_TIPO_EVENTO
 (
     TipoEventoId INT IDENTITY(1,1) NOT NULL,
+
     Nombre NVARCHAR(50) NOT NULL,
-    PermitePublicidad BIT NOT NULL DEFAULT(0),
-    Activo BIT NOT NULL DEFAULT(1),
+
+    PermitePublicidad BIT NOT NULL
+        DEFAULT(0),
+
+    Activo BIT NOT NULL
+        DEFAULT(1),
+
 
     CONSTRAINT PK_GR_TIPO_EVENTO
         PRIMARY KEY(TipoEventoId)
 );
 GO
+
+
 
 INSERT INTO dbo.GR_TIPO_EVENTO
 (
@@ -43,6 +58,7 @@ INSERT INTO dbo.GR_TIPO_EVENTO
     PermitePublicidad
 )
 VALUES
+
 ('IDENTIFICACION',0),
 ('HORA',0),
 ('LINER',0),
@@ -55,10 +71,15 @@ VALUES
 ('INE',0),
 ('HIMNO',0),
 ('MANUAL',1);
+
 GO
 
+
+
+
+
 /*==============================================================*/
-/* PARRILLA                                                      */
+/* PARRILLA                                                    */
 /*==============================================================*/
 
 CREATE TABLE dbo.GR_PARRILLA
@@ -73,18 +94,25 @@ CREATE TABLE dbo.GR_PARRILLA
 
     FechaFin DATE NULL,
 
-    Activa BIT NOT NULL DEFAULT(1),
+    Activa BIT NOT NULL
+        DEFAULT(1),
 
     FechaCreacion DATETIME2 NOT NULL
         DEFAULT(GETDATE()),
+
+
 
     CONSTRAINT PK_GR_PARRILLA
         PRIMARY KEY(ParrillaId)
 );
 GO
 
+
+
+
+
 /*==============================================================*/
-/* DÍAS DE APLICACIÓN                                             */
+/* DIAS DE APLICACION                                           */
 /*==============================================================*/
 
 CREATE TABLE dbo.GR_PARRILLA_DIA
@@ -95,48 +123,140 @@ CREATE TABLE dbo.GR_PARRILLA_DIA
 
     DiaSemana TINYINT NOT NULL,
 
+
     CONSTRAINT PK_GR_PARRILLA_DIA
         PRIMARY KEY(ParrillaDiaId),
 
-    CONSTRAINT FK_GR_PARRILLA_DIA
+
+    CONSTRAINT FK_GR_PARRILLA_DIA_PARRILLA
         FOREIGN KEY(ParrillaId)
         REFERENCES dbo.GR_PARRILLA(ParrillaId)
+
 );
 GO
 
+
+
+
+
 /*==============================================================*/
-/* EVENTOS                                                       */
+/* EVENTOS DE PARRILLA                                          */
 /*==============================================================*/
 
 CREATE TABLE dbo.GR_PARRILLA_EVENTO
 (
     EventoId BIGINT IDENTITY(1,1) NOT NULL,
 
+
     ParrillaId BIGINT NOT NULL,
+
 
     Hora TIME NOT NULL,
 
+
     TipoEventoId INT NOT NULL,
+
 
     Descripcion NVARCHAR(200) NULL,
 
-    PermitePublicidad BIT NOT NULL DEFAULT(0),
 
-    DuracionSegundos INT NOT NULL DEFAULT(0),
+    PermitePublicidad BIT NOT NULL
+        DEFAULT(0),
+
+
+    DuracionSegundos INT NOT NULL
+        DEFAULT(0),
+
 
     DuracionMaximaSegundos INT NULL,
 
+
     Orden INT NOT NULL,
+
+
 
     CONSTRAINT PK_GR_PARRILLA_EVENTO
         PRIMARY KEY(EventoId),
+
+
 
     CONSTRAINT FK_GR_PARRILLA_EVENTO_PARRILLA
         FOREIGN KEY(ParrillaId)
         REFERENCES dbo.GR_PARRILLA(ParrillaId),
 
+
+
     CONSTRAINT FK_GR_PARRILLA_EVENTO_TIPO
         FOREIGN KEY(TipoEventoId)
         REFERENCES dbo.GR_TIPO_EVENTO(TipoEventoId)
+
 );
+GO
+
+
+
+
+/*==============================================================*/
+/* DATOS DE PRUEBA                                              */
+/*==============================================================*/
+
+-- Ejemplo de parrilla
+
+INSERT INTO dbo.GR_PARRILLA
+(
+    EmisoraId,
+    Nombre,
+    FechaInicio,
+    Activa
+)
+VALUES
+(
+    1,
+    'PROGRAMACION GENERAL',
+    CAST(GETDATE() AS DATE),
+    1
+);
+
+GO
+
+
+
+
+-- Eventos iniciales
+
+INSERT INTO dbo.GR_PARRILLA_EVENTO
+(
+    ParrillaId,
+    Hora,
+    TipoEventoId,
+    Descripcion,
+    PermitePublicidad,
+    DuracionSegundos,
+    DuracionMaximaSegundos,
+    Orden
+)
+VALUES
+
+(
+    1,
+    '05:00',
+    1,
+    'IDENTIFICACION OFICIAL',
+    0,
+    30,
+    NULL,
+    1
+),
+
+(
+    1,
+    '06:00',
+    6,
+    'PROGRAMA MATUTINO',
+    1,
+    0,
+    900,
+    2
+);
+
 GO
