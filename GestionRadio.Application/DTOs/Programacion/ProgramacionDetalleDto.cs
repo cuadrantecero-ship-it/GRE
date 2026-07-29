@@ -12,11 +12,19 @@ public class ProgramacionDetalleDto
 
     public long VersionId { get; set; }
 
-    public long BloqueId { get; set; }
+    //==================================================
+    // EVENTO DE PARRILLA
+    //==================================================
+
+    public long EventoParrillaId { get; set; }
 
     public TimeOnly Hora { get; set; }
 
     public int Orden { get; set; }
+
+    //==================================================
+    // DINESAT
+    //==================================================
 
     public long? DinesatProgramBlockId { get; set; }
 
@@ -24,11 +32,19 @@ public class ProgramacionDetalleDto
 
     public long? DinesatMaterialId { get; set; }
 
+    //==================================================
+    // MATERIAL
+    //==================================================
+
     public string? CodigoMaterial { get; set; }
 
     public string? TituloMaterial { get; set; }
 
     public int DuracionSegundos { get; set; }
+
+    //==================================================
+    // ESTADO
+    //==================================================
 
     public bool Transmitido { get; set; }
 

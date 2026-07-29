@@ -2,6 +2,7 @@
 using GestionRadio.Domain.Entities;
 using GestionRadio.Domain.Interfaces;
 using GestionRadio.Infrastructure.Persistence;
+using GestionRadio.Infrastructure.Sql;
 using Microsoft.Data.SqlClient;
 
 namespace GestionRadio.Infrastructure.Dinesat;
@@ -22,22 +23,12 @@ public sealed class DinesatProgramBlockRepository : IDinesatProgramBlockReposito
 
     public async Task<IReadOnlyList<DinesatProgramBlock>> ObtenerPorProgramacionAsync(long programmingId)
     {
-        const string sql = @"
-SELECT
-    PGMBLOCKID  AS ProgramBlockId,
-    PGMID       AS ProgrammingId,
-    BLOCKTIME   AS HoraInicio,
-    DESCRIPTION AS Nombre
-FROM PROGRAMBLOCK
-WHERE PGMID = @ProgrammingId
-ORDER BY BLOCKTIME;";
-
         using var cn = (SqlConnection)_connectionFactory.CreateDinesatConnection();
 
         await cn.OpenAsync();
 
         var bloques = await cn.QueryAsync<DinesatProgramBlock>(
-            sql,
+            DinesatProgramBlockSql.ObtenerPorProgramacion,
             new
             {
                 ProgrammingId = programmingId
@@ -48,24 +39,32 @@ ORDER BY BLOCKTIME;";
 
     public async Task<DinesatProgramBlock?> ObtenerPorIdAsync(long programBlockId)
     {
-        const string sql = @"
-SELECT
-    PGMBLOCKID  AS ProgramBlockId,
-    PGMID       AS ProgrammingId,
-    BLOCKTIME   AS HoraInicio,
-    DESCRIPTION AS Nombre
-FROM PROGRAMBLOCK
-WHERE PGMBLOCKID = @ProgramBlockId;";
-
         using var cn = (SqlConnection)_connectionFactory.CreateDinesatConnection();
 
         await cn.OpenAsync();
 
         return await cn.QueryFirstOrDefaultAsync<DinesatProgramBlock>(
-            sql,
+            DinesatProgramBlockSql.ObtenerPorId,
             new
             {
                 ProgramBlockId = programBlockId
+            });
+    }
+
+    public async Task<DinesatProgramBlock?> ObtenerPorHoraAsync(
+        long programmingId,
+        TimeOnly hora)
+    {
+        using var cn = (SqlConnection)_connectionFactory.CreateDinesatConnection();
+
+        await cn.OpenAsync();
+
+        return await cn.QueryFirstOrDefaultAsync<DinesatProgramBlock>(
+            DinesatProgramBlockSql.ObtenerPorHora,
+            new
+            {
+                ProgrammingId = programmingId,
+                Hora = hora.ToString(@"HH\:mm\:ss")
             });
     }
 }

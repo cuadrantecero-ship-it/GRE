@@ -1,0 +1,212 @@
+﻿@model GestionRadio.Web.Models.ViewModels.Dinesat.DinesatExplorerViewModel
+
+@{
+    ViewData["Title"] = "Explorador Dinesat";
+}
+
+<div class="container-fluid">
+
+    <!-- ENCABEZADO -->
+    <div class="card shadow-sm mb-3">
+
+        <div class="card-body">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-4">
+
+                    <h3 class="mb-0">
+                        <i class="bi bi-folder2-open"></i>
+                        Explorador Dinesat
+                    </h3>
+
+                    <small class="text-muted">
+                        Biblioteca de materiales de audio
+                    </small>
+
+                </div>
+
+                <div class="col-lg-5">
+
+                    <input class="form-control"
+                           placeholder="Buscar código, título o campaña..." />
+
+                </div>
+
+                <div class="col-lg-3 text-end">
+
+                    <span class="badge bg-primary fs-6">
+
+                        @Model.Materiales.Count Materiales
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- EXPLORADOR -->
+
+    <div class="row g-3">
+
+        <!-- CATEGORÍAS -->
+
+        <div class="col-lg-3">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <strong>
+                        Categorías
+                    </strong>
+
+                </div>
+
+                <div class="card-body p-0">
+
+                    <partial name="_Categorias" />
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- MATERIALES -->
+
+        <div class="col-lg-5">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header d-flex justify-content-between">
+
+                    <strong>
+                        Materiales
+                    </strong>
+
+                    <span class="text-muted">
+
+                        @Model.Materiales.Count registros
+
+                    </span>
+
+                </div>
+
+                <div class="card-body p-0">
+
+                    <partial name="_Materiales"
+                             model="Model" />
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- DETALLE -->
+
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header">
+
+                    <strong>
+                        Información del material
+                    </strong>
+
+                </div>
+
+                <div class="card-body p-0">
+
+                    <partial name="_Detalle"
+                             model="Model" />
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PIE -->
+
+    <div class="row mt-3">
+
+        <div class="col-12">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="row text-center">
+
+                        <div class="col-md-3">
+
+                            <h5>
+                                @Model.Materiales.Count
+                            </h5>
+
+                            <small class="text-muted">
+                                Materiales cargados
+                            </small>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <h5>
+                                0
+                            </h5>
+
+                            <small class="text-muted">
+                                Seleccionados
+                            </small>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <h5>
+                                Dinesat
+                            </h5>
+
+                            <small class="text-muted">
+                                Fuente
+                            </small>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <h5>
+
+                                GESTIÓN RADIO
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                Explorer
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

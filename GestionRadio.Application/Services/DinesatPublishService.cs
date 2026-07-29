@@ -1,19 +1,13 @@
 ﻿using GestionRadio.Application.Interfaces;
-using GestionRadio.Domain.Interfaces;
 
 namespace GestionRadio.Application.Services;
 
 public sealed class DinesatPublishService : IDinesatPublishService
 {
-    private readonly IDinesatPublishRepository _repository;
-
-    public DinesatPublishService(IDinesatPublishRepository repository)
+    public async Task PublicarProgramacionAsync(long programacionId)
     {
-        _repository = repository;
-    }
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(programacionId);
 
-    public async Task PublicarAsync(DateOnly fecha)
-    {
-        await _repository.PublicarAsync(fecha);
+        await Task.CompletedTask;
     }
 }

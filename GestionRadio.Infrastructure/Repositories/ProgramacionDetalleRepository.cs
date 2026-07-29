@@ -18,8 +18,7 @@ public sealed class ProgramacionDetalleRepository
     public async Task<IEnumerable<ProgramacionDetalle>> ObtenerPorProgramacionAsync(
         long programacionId)
     {
-        if (programacionId <= 0)
-            throw new ArgumentOutOfRangeException(nameof(programacionId));
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(programacionId);
 
         using var connection = CreateConnection();
 
@@ -34,8 +33,7 @@ public sealed class ProgramacionDetalleRepository
     public async Task<ProgramacionDetalle?> ObtenerPorIdAsync(
         long programacionDetalleId)
     {
-        if (programacionDetalleId <= 0)
-            throw new ArgumentOutOfRangeException(nameof(programacionDetalleId));
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(programacionDetalleId);
 
         using var connection = CreateConnection();
 
@@ -74,8 +72,7 @@ public sealed class ProgramacionDetalleRepository
     public async Task EliminarLogicoAsync(
         long programacionDetalleId)
     {
-        if (programacionDetalleId <= 0)
-            throw new ArgumentOutOfRangeException(nameof(programacionDetalleId));
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(programacionDetalleId);
 
         using var connection = CreateConnection();
 

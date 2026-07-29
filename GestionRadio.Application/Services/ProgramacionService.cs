@@ -22,7 +22,6 @@ public sealed class ProgramacionService : IProgramacionService
         _mapper = mapper;
     }
 
-
     //==================================================
     // CABECERA
     //==================================================
@@ -33,7 +32,6 @@ public sealed class ProgramacionService : IProgramacionService
 
         return _mapper.Map<IEnumerable<ProgramacionDto>>(datos);
     }
-
 
     public async Task<ProgramacionDto?> ObtenerPorIdAsync(long id)
     {
@@ -46,7 +44,6 @@ public sealed class ProgramacionService : IProgramacionService
             ? null
             : _mapper.Map<ProgramacionDto>(entidad);
     }
-
 
     public async Task<long> CrearAsync(ProgramacionCreateDto dto)
     {
@@ -61,7 +58,6 @@ public sealed class ProgramacionService : IProgramacionService
 
         return await _repository.InsertarAsync(entidad);
     }
-
 
     public async Task ActualizarAsync(ProgramacionDto dto)
     {
@@ -85,7 +81,6 @@ public sealed class ProgramacionService : IProgramacionService
         await _repository.ActualizarAsync(entidad);
     }
 
-
     public async Task EliminarAsync(long id)
     {
         if (id <= 0)
@@ -100,7 +95,6 @@ public sealed class ProgramacionService : IProgramacionService
 
         await _repository.EliminarLogicoAsync(id);
     }
-
 
     //==================================================
     // DETALLES
@@ -117,7 +111,6 @@ public sealed class ProgramacionService : IProgramacionService
 
         return _mapper.Map<IEnumerable<ProgramacionDetalleDto>>(detalles);
     }
-
 
     public async Task<long> AgregarDetalleAsync(
         ProgramacionDetalleCreateDto dto)
@@ -137,7 +130,6 @@ public sealed class ProgramacionService : IProgramacionService
         return await _detalleRepository.InsertarAsync(detalle);
     }
 
-
     public async Task ActualizarDetalleAsync(
         ProgramacionDetalleDto dto)
     {
@@ -151,7 +143,7 @@ public sealed class ProgramacionService : IProgramacionService
             throw new InvalidOperationException(
                 "El detalle de programación no existe.");
 
-        detalle.BloqueId = dto.BloqueId;
+        detalle.EventoParrillaId = dto.EventoParrillaId;
         detalle.Hora = dto.Hora;
         detalle.Orden = dto.Orden;
 
@@ -160,7 +152,6 @@ public sealed class ProgramacionService : IProgramacionService
 
         await _detalleRepository.ActualizarAsync(detalle);
     }
-
 
     public async Task EliminarDetalleAsync(
         long programacionDetalleId)

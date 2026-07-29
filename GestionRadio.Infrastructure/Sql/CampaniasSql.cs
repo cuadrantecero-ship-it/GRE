@@ -107,4 +107,31 @@ WHERE ID_CAMPANIA = @IdCampania;";
 SELECT COUNT(*)
 FROM GR_CAMPANIA
 WHERE FOLIO = @Folio;";
+
+
+    public const string ObtenerCampaniasElegibles = @"
+SELECT
+    C.ID_CAMPANIA      AS IdCampania,
+    C.FOLIO            AS Folio,
+    C.ID_CLIENTE       AS IdCliente,
+    CL.RAZON_SOCIAL    AS Cliente,
+    C.NOMBRE           AS Nombre,
+    C.DESCRIPCION      AS Descripcion,
+    C.FECHA_INICIO     AS FechaInicio,
+    C.FECHA_FIN        AS FechaFin,
+    C.PRIORIDAD        AS Prioridad,
+    C.ESTADO           AS Estado,
+    C.ACTIVO           AS Activo,
+    C.FECHA_ALTA       AS FechaAlta
+FROM GR_CAMPANIA C
+INNER JOIN GR_CLIENTE CL
+    ON CL.ID_CLIENTE = C.ID_CLIENTE
+WHERE
+    C.ACTIVO = 1
+    AND C.FECHA_INICIO <= @Fecha
+    AND C.FECHA_FIN >= @Fecha
+ORDER BY
+    C.PRIORIDAD DESC,
+    CL.RAZON_SOCIAL,
+    C.NOMBRE;";
 }

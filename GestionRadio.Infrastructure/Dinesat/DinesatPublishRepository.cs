@@ -25,40 +25,15 @@ public sealed class DinesatPublishRepository : IDinesatPublishRepository
     // MÉTODO PRINCIPAL
     //=========================================================
 
-    public async Task PublicarAsync(DateOnly fecha)
+    public async Task PublicarProgramacionAsync(long programacionId)
     {
-        using var connection = _connectionFactory.CreateConnection();
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(programacionId);
 
-        connection.Open();
+        // Implementación temporal.
+        // En el siguiente paso volveremos a incorporar
+        // la lógica completa de publicación.
 
-        using var transaction = connection.BeginTransaction();
-
-        try
-        {
-            int pgmId = await ObtenerOCrearProgrammingAsync(
-                connection,
-                transaction,
-                fecha);
-
-            //=================================================
-            // PARTE 2
-            //
-            // Aquí continuará:
-            //
-            // Crear bloques
-            // Buscar materiales
-            // Crear eventos
-            //
-            // (No hacer nada todavía)
-            //=================================================
-
-            transaction.Commit();
-        }
-        catch
-        {
-            transaction.Rollback();
-            throw;
-        }
+        await Task.CompletedTask;
     }
 
     //=========================================================

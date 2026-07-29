@@ -7,25 +7,19 @@ public sealed class TimelineBuilder
 {
     private readonly IParrillaRepository _parrillaRepository;
 
-
-    public TimelineBuilder(
-        IParrillaRepository parrillaRepository)
+    public TimelineBuilder(IParrillaRepository parrillaRepository)
     {
-        _parrillaRepository = parrillaRepository;
+        _parrillaRepository = parrillaRepository
+            ?? throw new ArgumentNullException(nameof(parrillaRepository));
     }
-
-
 
     public async Task<SchedulingDay> BuildAsync(
         DateOnly fecha,
         long emisoraId)
     {
-        var eventos =
-            await _parrillaRepository.ObtenerTimelineAsync(
-                emisoraId,
-                fecha);
-
-
+        var eventos = await _parrillaRepository.ObtenerTimelineAsync(
+            emisoraId,
+            fecha);
 
         var schedulingDay = new SchedulingDay
         {
@@ -33,30 +27,17 @@ public sealed class TimelineBuilder
             EmisoraId = emisoraId
         };
 
-
-
         foreach (var evento in eventos)
         {
-
-            var block = new TimelineBlock
+            schedulingDay.Blocks.Add(new TimelineBlock
             {
+                EventoId = evento.EventoId,
                 Hora = TimeOnly.FromTimeSpan(evento.Hora),
-
-                Descripcion =
-                    evento.Descripcion ?? string.Empty,
-
-                PermitePublicidad =
-                    evento.PermitePublicidad,
-
-                DuracionMaximaSegundos =
-                    evento.DuracionMaximaSegundos ?? 0
-            };
-
-
-            schedulingDay.Blocks.Add(block);
+                Descripcion = evento.Descripcion ?? string.Empty,
+                PermitePublicidad = evento.PermitePublicidad,
+                DuracionMaximaSegundos = evento.DuracionMaximaSegundos ?? 0
+            });
         }
-
-
 
         return schedulingDay;
     }

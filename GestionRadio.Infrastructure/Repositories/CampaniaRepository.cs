@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using GestionRadio.Application.Interfaces;
 using GestionRadio.Domain.Entities;
 using GestionRadio.Domain.Interfaces;
 using GestionRadio.Infrastructure.Persistence;
@@ -81,5 +80,17 @@ public sealed class CampaniaRepository : BaseRepository, ICampaniaRepository
             });
 
         return total > 0;
+    }
+
+    public async Task<IEnumerable<Campania>> ObtenerCampaniasElegiblesAsync(DateOnly fecha)
+    {
+        using var db = CreateConnection();
+
+        return await db.QueryAsync<Campania>(
+            CampaniasSql.ObtenerCampaniasElegibles,
+            new
+            {
+                Fecha = fecha
+            });
     }
 }

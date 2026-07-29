@@ -4,7 +4,7 @@ using GestionRadio.Domain.Interfaces;
 namespace GestionRadio.Application.Services.Scheduling.Resolvers;
 
 /// <summary>
-/// Resuelve una versión válida del ERP.
+/// Resuelve la versión que debe utilizar el motor de programación.
 /// </summary>
 public sealed class VersionResolver
 {
@@ -17,7 +17,7 @@ public sealed class VersionResolver
     }
 
     /// <summary>
-    /// Obtiene una versión válida.
+    /// Obtiene una versión específica por Id.
     /// </summary>
     public async Task<VersionCampania> ObtenerAsync(long idVersion)
     {
@@ -36,5 +36,36 @@ public sealed class VersionResolver
         }
 
         return version;
+    }
+
+    /// <summary>
+    /// Resuelve automáticamente la versión que debe reproducirse
+    /// para una campaña.
+    /// </summary>
+    public async Task<VersionCampania> ResolverParaCampaniaAsync(long idCampania)
+    {
+        var versiones = (await _versionRepository
+                .ObtenerPorCampaniaAsync(idCampania))
+            .Where(v => v.Activo)
+            .OrderBy(v => v.IdVersion)
+            .ToList();
+
+        if (versiones.Count == 0)
+        {
+            throw new InvalidOperationException(
+                $"La campaña {idCampania} no tiene versiones activas.");
+        }
+
+        // Primera implementación:
+        // devolver la primera versión activa.
+        //
+        // Más adelante aquí implementaremos:
+        // - Rotación
+        // - Peso
+        // - Frecuencia
+        // - Evitar repetición
+        // - Balanceo automático
+
+        return versiones.First();
     }
 }

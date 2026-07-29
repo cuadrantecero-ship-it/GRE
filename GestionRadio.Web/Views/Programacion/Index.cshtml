@@ -19,8 +19,8 @@
             </small>
         </div>
 
+        <div class="d-flex gap-2">
 
-        <div>
             <a asp-action="Create"
                class="btn btn-success">
 
@@ -28,10 +28,18 @@
                 Nueva Programación
 
             </a>
+
+            <a asp-action="Generar"
+               class="btn btn-warning">
+
+                <i class="bi bi-magic"></i>
+                Generar Automática
+
+            </a>
+
         </div>
 
     </div>
-
 
     @if (TempData["Success"] != null)
     {
@@ -47,8 +55,6 @@
         </div>
     }
 
-
-
     <div class="card shadow-sm">
 
         <div class="card-header">
@@ -56,7 +62,6 @@
             <strong>Listado</strong>
 
         </div>
-
 
         <div class="card-body">
 
@@ -67,48 +72,35 @@
                     <tr>
 
                         <th>Fecha</th>
-
                         <th>Emisora</th>
-
                         <th>Parrilla</th>
-
                         <th>Estado</th>
-
                         <th>Activa</th>
-
                         <th width="180"></th>
 
                     </tr>
 
                 </thead>
 
-
                 <tbody>
-
 
                     @if (Model.Any())
                     {
-
                         foreach (var item in Model)
                         {
-
                             <tr>
-
 
                                 <td>
                                     @item.Fecha.ToString("dd/MM/yyyy")
                                 </td>
 
-
                                 <td>
                                     @item.EmisoraId
                                 </td>
 
-
                                 <td>
                                     @item.ParrillaId
                                 </td>
-
 
                                 <td>
 
@@ -122,16 +114,13 @@
 
                                 </td>
 
-
                                 <td>
 
                                     @(item.Activa ? "Activa" : "Inactiva")
 
                                 </td>
 
-
                                 <td>
-
 
                                     <a asp-action="Edit"
                                        asp-route-id="@item.ProgramacionId"
@@ -141,15 +130,12 @@
 
                                     </a>
 
-
                                     <form asp-action="Delete"
                                           asp-route-id="@item.ProgramacionId"
                                           method="post"
                                           class="d-inline">
 
-
                                         @Html.AntiForgeryToken()
-
 
                                         <button type="submit"
                                                 class="btn btn-danger btn-sm"
@@ -159,21 +145,15 @@
 
                                         </button>
 
-
                                     </form>
-
 
                                 </td>
 
-
                             </tr>
-
                         }
-
                     }
                     else
                     {
-
                         <tr>
 
                             <td colspan="6"
@@ -184,9 +164,7 @@
                             </td>
 
                         </tr>
-
                     }
-
 
                 </tbody>
 

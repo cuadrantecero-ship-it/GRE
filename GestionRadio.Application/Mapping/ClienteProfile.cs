@@ -10,15 +10,21 @@ public sealed class ClienteProfile : Profile
     public ClienteProfile()
     {
         //=========================================
-        // CLIENTE
+        // CLIENTES
         //=========================================
 
         CreateMap<Cliente, ClienteDto>();
 
 
+        //=========================================
+        // CAMPAÑAS
+        //=========================================
+
+        CreateMap<Campania, CampaniaDto>();
+
 
         //=========================================
-        // PARRILLA
+        // PARRILLAS
         //=========================================
 
         CreateMap<Parrilla, ParrillaDto>();
@@ -29,12 +35,11 @@ public sealed class ClienteProfile : Profile
 
 
         //=========================================
-        // EVENTOS PARRILLA
+        // EVENTOS DE PARRILLA
         //=========================================
 
         CreateMap<ParrillaEvento, ParrillaEventoDto>();
 
-        CreateMap<ParrillaEventoUpdateDto, Parrilla>();
-
+        CreateMap<ParrillaEventoUpdateDto, ParrillaEvento>();
     }
 }

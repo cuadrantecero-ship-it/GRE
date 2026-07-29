@@ -1,0 +1,34 @@
+﻿@model GestionRadio.Web.Models.ViewModels.Dinesat.DinesatExplorerViewModel
+
+@if (!Model.Materiales.Any())
+{
+    <div class="alert alert-warning m-3">
+        No existen materiales.
+    </div>
+}
+else
+{
+    <div class="list-group list-group-flush">
+
+        @foreach (var material in Model.Materiales)
+        {
+            <a href="#"
+               class="list-group-item list-group-item-action">
+
+                <div class="fw-bold">
+
+                    @material.Codigo
+
+                </div>
+
+                <small class="text-muted">
+
+                    @material.Titulo
+
+                </small>
+
+            </a>
+        }
+
+    </div>
+}

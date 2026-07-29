@@ -9,7 +9,7 @@ SELECT
     ID_CLIENTE                       AS ClienteId,
     ID_CAMPANIA                      AS CampaniaId,
     ID_VERSION                       AS VersionId,
-    ID_BLOQUE                        AS BloqueId,
+    ID_EVENTO_PARRILLA               AS EventoParrillaId,
     ORDEN                            AS Orden,
     HORA                             AS Hora,
     PROGRAMBLOCK_ID_DINESAT          AS DinesatProgramBlockId,
@@ -18,6 +18,7 @@ SELECT
     CODIGO_MATERIAL                  AS CodigoMaterial,
     TITULO_MATERIAL                  AS TituloMaterial,
     DURACION_SEGUNDOS                AS DuracionSegundos,
+    ESTADO                           AS Estado,
     TRANSMITIDO                      AS Transmitido,
     SINCRONIZADO                     AS Sincronizado,
     ACTIVO                           AS Activo,
@@ -27,7 +28,7 @@ SELECT
     USUARIO_MODIFICACION             AS UsuarioModificacion
 FROM GR_PROGRAMACION_DETALLE
 WHERE ID_PROGRAMACION = @ProgramacionId
-AND ACTIVO = 1
+  AND ACTIVO = 1
 ORDER BY HORA, ORDEN;";
 
 
@@ -38,7 +39,7 @@ SELECT
     ID_CLIENTE                       AS ClienteId,
     ID_CAMPANIA                      AS CampaniaId,
     ID_VERSION                       AS VersionId,
-    ID_BLOQUE                        AS BloqueId,
+    ID_EVENTO_PARRILLA               AS EventoParrillaId,
     ORDEN                            AS Orden,
     HORA                             AS Hora,
     PROGRAMBLOCK_ID_DINESAT          AS DinesatProgramBlockId,
@@ -47,6 +48,7 @@ SELECT
     CODIGO_MATERIAL                  AS CodigoMaterial,
     TITULO_MATERIAL                  AS TituloMaterial,
     DURACION_SEGUNDOS                AS DuracionSegundos,
+    ESTADO                           AS Estado,
     TRANSMITIDO                      AS Transmitido,
     SINCRONIZADO                     AS Sincronizado,
     ACTIVO                           AS Activo,
@@ -62,10 +64,10 @@ WHERE ID_PROGRAMACION_DETALLE = @Id;";
 INSERT INTO GR_PROGRAMACION_DETALLE
 (
     ID_PROGRAMACION,
+    ID_EVENTO_PARRILLA,
     ID_CLIENTE,
     ID_CAMPANIA,
     ID_VERSION,
-    ID_BLOQUE,
     ORDEN,
     HORA,
     PROGRAMBLOCK_ID_DINESAT,
@@ -74,6 +76,7 @@ INSERT INTO GR_PROGRAMACION_DETALLE
     CODIGO_MATERIAL,
     TITULO_MATERIAL,
     DURACION_SEGUNDOS,
+    ESTADO,
     TRANSMITIDO,
     SINCRONIZADO,
     ACTIVO,
@@ -82,10 +85,10 @@ INSERT INTO GR_PROGRAMACION_DETALLE
 VALUES
 (
     @ProgramacionId,
+    @EventoParrillaId,
     @ClienteId,
     @CampaniaId,
     @VersionId,
-    @BloqueId,
     @Orden,
     @Hora,
     @DinesatProgramBlockId,
@@ -94,6 +97,7 @@ VALUES
     @CodigoMaterial,
     @TituloMaterial,
     @DuracionSegundos,
+    @Estado,
     @Transmitido,
     @Sincronizado,
     @Activo,
@@ -106,7 +110,7 @@ SELECT CAST(SCOPE_IDENTITY() AS BIGINT);";
     public const string Actualizar = @"
 UPDATE GR_PROGRAMACION_DETALLE
 SET
-    ID_BLOQUE = @BloqueId,
+    ID_EVENTO_PARRILLA = @EventoParrillaId,
     ORDEN = @Orden,
     HORA = @Hora,
     PROGRAMBLOCK_ID_DINESAT = @DinesatProgramBlockId,
@@ -115,10 +119,11 @@ SET
     CODIGO_MATERIAL = @CodigoMaterial,
     TITULO_MATERIAL = @TituloMaterial,
     DURACION_SEGUNDOS = @DuracionSegundos,
+    ESTADO = @Estado,
     TRANSMITIDO = @Transmitido,
     SINCRONIZADO = @Sincronizado,
     ACTIVO = @Activo,
-    FECHA_MODIFICACION = @FechaModificacion,
+    FECHA_MODIFICACION = SYSDATETIME(),
     USUARIO_MODIFICACION = @UsuarioModificacion
 WHERE ID_PROGRAMACION_DETALLE = @ProgramacionDetalleId;";
 

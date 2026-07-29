@@ -2,17 +2,17 @@
 
 public class ProgramacionDetalle
 {
-    //=========================================
-    // Identificación
-    //=========================================
+    //==========================================================
+    // IDENTIFICACIÓN
+    //==========================================================
 
     public long ProgramacionDetalleId { get; set; }
 
     public long ProgramacionId { get; set; }
 
-    //=========================================
-    // Referencias de negocio
-    //=========================================
+    //==========================================================
+    // NEGOCIO
+    //==========================================================
 
     public long ClienteId { get; set; }
 
@@ -20,19 +20,19 @@ public class ProgramacionDetalle
 
     public long VersionId { get; set; }
 
-    //=========================================
-    // Parrilla
-    //=========================================
+    //==========================================================
+    // PARRILLA
+    //==========================================================
 
-    public long BloqueId { get; set; }
+    public long EventoParrillaId { get; set; }
 
     public int Orden { get; set; }
 
     public TimeOnly Hora { get; set; }
 
-    //=========================================
-    // Referencias Dinesat
-    //=========================================
+    //==========================================================
+    // DINESAT
+    //==========================================================
 
     public long? DinesatProgramBlockId { get; set; }
 
@@ -40,9 +40,9 @@ public class ProgramacionDetalle
 
     public long? DinesatMaterialId { get; set; }
 
-    //=========================================
-    // Material
-    //=========================================
+    //==========================================================
+    // MATERIAL
+    //==========================================================
 
     public string CodigoMaterial { get; set; } = string.Empty;
 
@@ -50,19 +50,21 @@ public class ProgramacionDetalle
 
     public int DuracionSegundos { get; set; }
 
-    //=========================================
-    // Estado
-    //=========================================
+    //==========================================================
+    // ESTADO
+    //==========================================================
 
-    public bool Transmitido { get; set; }
+    public byte Estado { get; set; } = 1;
 
     public bool Sincronizado { get; set; }
 
+    public bool Transmitido { get; set; }
+
     public bool Activo { get; set; } = true;
 
-    //=========================================
-    // Auditoría
-    //=========================================
+    //==========================================================
+    // AUDITORÍA
+    //==========================================================
 
     public DateTime FechaCreacion { get; set; }
 
@@ -72,11 +74,9 @@ public class ProgramacionDetalle
 
     public string? UsuarioModificacion { get; set; }
 
-    //=========================================
-    // Navegación
-    //=========================================
+    //==========================================================
+    // NAVEGACIÓN
+    //==========================================================
 
     public Programacion? Programacion { get; set; }
-
-    public ParrillaBloque? Bloque { get; set; }
 }

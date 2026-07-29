@@ -15,4 +15,7 @@ public interface ICampaniaRepository
     Task EliminarLogicoAsync(long id);
 
     Task<bool> ExisteFolioAsync(string folio);
+
+    // Scheduler
+    Task<IEnumerable<Campania>> ObtenerCampaniasElegiblesAsync(DateOnly fecha);
 }
